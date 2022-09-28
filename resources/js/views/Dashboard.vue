@@ -1,5 +1,5 @@
 <template>
-    <h1>Dash</h1>
+    <h1>Dash content</h1>
     <pre>{{users}}</pre>
 </template>
 

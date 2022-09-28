@@ -1,8 +1,8 @@
 <template>
     <ul>
-        <li><router-link to="/">Home</router-link></li>
-        <li><router-link to="/login">Login</router-link></li>
         <li><router-link to="/dashboard">Dashboard</router-link></li>
+        <li><router-link to="/admin">Admin</router-link></li>
+        <li><router-link :to="{name: 'tournament.index'}">Tournament</router-link></li>
         <li><a @click.prevent="logout" href="#">Logout</a></li>
     </ul>
 </template>
@@ -11,7 +11,7 @@
 import { useStore } from 'vuex';
 
 export default {
-    name: "TheNavbar",
+    name: "TheAdminNavbar",
     setup() {
         const store = useStore();
 

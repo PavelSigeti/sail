@@ -14,11 +14,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
+//Route::get('/users', [\App\Http\Controllers\Admin\DashboardController::class, 'index']);
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
-    Route::get('/dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index']);
+    Route::get('/users', [\App\Http\Controllers\User\DashboardController::class, 'index']);
 });
+
+Route::group(['middleware' => ['auth:sanctum', 'admin']], function () {
+    Route::get('/admin', \App\Http\Controllers\Admin\DashboardController::class);
+    Route::post('/admin/tournament/store', [\App\Http\Controllers\Admin\TournamentController::class, 'store']);
+    Route::get('/admin/tournament/{id}', [\App\Http\Controllers\Admin\TournamentController::class, 'edit']);
+    Route::patch('/admin/tournament/{id}/update', [\App\Http\Controllers\Admin\TournamentController::class, 'update']);
+});
+

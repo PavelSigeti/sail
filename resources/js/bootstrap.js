@@ -1,7 +1,8 @@
 import _ from 'lodash';
 window._ = _;
 
-import router from './router';
+import store from './store/index.js';
+import router from './router/index.js';
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -16,11 +17,15 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.axios.defaults.withCredentials = true;
 window.axios.interceptors.response.use(null, error => {
     if (error.response.status === 401 || error.response.status === 419) {
-        router.push('/login?message=auth')
+        store.dispatch('auth/logout');
+    }
+    if(error.response.status === 500) {
+        router.push({name: 'Dashboard'});
     }
 
     return Promise.reject(error)
 });
+
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

@@ -34,7 +34,7 @@ export default {
                     password_confirmation: password_confirmation.value,
                 });
                 localStorage.setItem('x_xsrf_token', data.config.headers['X-XSRF-TOKEN']);
-                router.push('/dash');
+                router.push({name: 'Dashboard',});
             } catch (e) {
                 console.log(e.message);
             }

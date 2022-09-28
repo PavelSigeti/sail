@@ -8,9 +8,8 @@
 </template>
 
 <script>
-import { ref } from 'vue';
-import axios from "axios";
-import { useRouter } from 'vue-router';
+import {ref} from 'vue';
+import { useStore } from 'vuex';
 
 export default {
     name: "Login",
@@ -18,20 +17,13 @@ export default {
         const email = ref();
         const password = ref();
 
-        const router = useRouter();
+        const store = useStore();
 
-        const login = async () => {
-            try {
-                await axios.get('/sanctum/csrf-cookie');
-                const data = await axios.post('/login', {
-                    email: email.value,
-                    password: password.value,
-                });
-                localStorage.setItem('x_xsrf_token', data.config.headers['X-XSRF-TOKEN']);
-                router.push('/dash');
-            } catch(e) {
-                console.log(e.message);
-            }
+        const login = () => {
+            store.dispatch('auth/login', {
+                email: email.value,
+                password: password.value,
+            });
         };
 
         return {
