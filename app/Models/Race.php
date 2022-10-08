@@ -10,12 +10,12 @@ class Race extends Model
     use HasFactory;
 
     protected $fillable = [
-        'stage_id', 'number',
+        'stage_id', 'group_id', 'status',
     ];
 
     public function users()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class)->withTimestamps();;
     }
 
     public function stages()

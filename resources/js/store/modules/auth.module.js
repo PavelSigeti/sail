@@ -39,14 +39,14 @@ export default {
 
         },
         async logout({commit}) {
-            try{
+            // try{
                 await axios.post('/logout');
                 localStorage.removeItem('x_xsrf_token');
                 router.push('/login');
                 commit('logout');
-            } catch (e) {
-                console.log(e.message);
-            }
+            // } catch (e) {
+            //     console.log(e.message);
+            // }
 
         }
     },

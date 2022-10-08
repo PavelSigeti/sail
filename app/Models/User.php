@@ -33,6 +33,17 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+
+    public function stages()
+    {
+        return $this->belongsToMany(Stage::class);
+    }
+
+    public function races()
+    {
+        return $this->belongsToMany(Race::class)->withTimestamps();;
+    }
+
     /**
      * The attributes that should be cast.
      *

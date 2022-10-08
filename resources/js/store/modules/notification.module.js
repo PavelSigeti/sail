@@ -17,7 +17,6 @@ export default {
     },
     actions: {
         displayMessage({ commit }, payload) {
-            console.log('payload', payload);
             commit('setMessage', payload);
             setTimeout(() => {
                 commit('clearMessage');

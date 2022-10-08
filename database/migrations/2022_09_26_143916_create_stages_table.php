@@ -20,6 +20,7 @@ return new class extends Migration
             $table->dateTime('register_end');
             $table->dateTime('race_start');
             $table->string('title');
+            $table->enum('status', ['active', 'default', 'group', 'flot', 'finished'])->default('active');
             $table->text('excerpt')->nullable();
             $table->text('description')->nullable();
             $table->timestamps();

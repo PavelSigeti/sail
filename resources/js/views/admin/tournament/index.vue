@@ -14,13 +14,21 @@
         </div>
         <button :disabled="loading">Создать</button>
     </form>
+
+    <h2>Список серий</h2>
+    <div class="block-container">
+        <router-link v-for="tournament in tournaments" :key="tournament.id" :to="{name: 'tournament.edit', params: {id: tournament.id}}">
+            <div class="tournament-item">
+                {{tournament.title}} - {{tournament.yacht}}
+            </div>
+        </router-link>
+    </div>
 </template>
 
 <script>
-import {ref} from 'vue';
+import {onMounted, ref} from 'vue';
 import axios from "axios";
 import { useStore } from 'vuex';
-import { useRouter } from 'vue-router';
 
 export default {
     name: "tournament.index",
@@ -29,10 +37,20 @@ export default {
         const yacht = ref('');
         const description = ref('');
 
+        const tournaments = ref();
+
         const store = useStore();
-        const router = useRouter();
 
         const loading = ref(false);
+
+        onMounted( async() => {
+            try {
+                const data = await axios.get('/api/admin/tournament');
+                tournaments.value = data.data;
+            } catch (e) {
+                console.log(e.message);
+            }
+        });
 
         const submit = async () => {
             loading.value = true;
@@ -42,18 +60,20 @@ export default {
                     yacht: yacht.value,
                     description: description.value,
                 });
-                title.value = '';
-                yacht.value = '';
-                description.value = '';
                 store.dispatch('notification/displayMessage', {
                     value: 'Серия успешно создана',
                     type: 'primary',
                 });
                 const id = data.data.id;
-                console.log(data);
-                router.push({name: 'tournament.edit', params: {id}});
+                tournaments.value.unshift({
+                    id,
+                    title: title.value,
+                    yacht: yacht.value,
+                });
+                title.value = '';
+                yacht.value = '';
+                description.value = '';
             } catch (e) {
-                console.log(e.message);
                 store.dispatch('notification/displayMessage', {
                     value: 'Ошибка создания серии',
                     type: 'error',
@@ -64,7 +84,7 @@ export default {
 
         return {
             submit, title, yacht,
-            description, loading
+            description, loading, tournaments,
         }
     }
 }

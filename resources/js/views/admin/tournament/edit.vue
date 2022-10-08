@@ -16,6 +16,17 @@
         </div>
         <button :disabled="loading">Редактировать</button>
     </form>
+
+    <br><br>
+    <AppStageCreate />
+
+    <br><br>
+    <router-link v-for="stage in stages" :key="stage.id" :to="{name: 'stage.edit', params: {id:stage.id}}">
+        <div class="stage-item">
+            {{stage.title}} - {{stage.race_start}}
+        </div>
+    </router-link>
+
 </template>
 
 <script>
@@ -23,9 +34,13 @@ import {onMounted, ref} from 'vue';
 import axios from "axios";
 import { useRoute } from 'vue-router';
 import { useStore } from 'vuex';
+import AppStageCreate from "./AppStageCreate.vue";
 
 export default {
     name: "tournament.edit",
+    components: {
+        AppStageCreate
+    },
     setup() {
         const route = useRoute();
         const store = useStore();
@@ -35,14 +50,20 @@ export default {
         const description = ref();
         const loading = ref(false);
 
+        const stages = ref();
+
         const id = route.params.id;
 
         onMounted(async () => {
             try {
-                const data = await axios.get(`/api/admin/tournament/${id}`);
-                title.value = data.data.title;
-                yacht.value = data.data.yacht;
-                description.value = data.data.description;
+                const tournament = await axios.get(`/api/admin/tournament/${id}`);
+                title.value = tournament.data.title;
+                yacht.value = tournament.data.yacht;
+                description.value = tournament.data.description;
+
+                const stageData = await axios.get(`/api/admin/stage/${id}`);
+                stages.value = stageData.data;
+
             } catch (e) {
                 console.log(e.message);
             }
@@ -74,7 +95,7 @@ export default {
 
         return {
             submit, title, yacht,
-            description, loading
+            description, loading, stages
         }
     }
 }

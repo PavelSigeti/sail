@@ -20,7 +20,10 @@ window.axios.interceptors.response.use(null, error => {
         store.dispatch('auth/logout');
     }
     if(error.response.status === 500) {
-        router.push({name: 'Dashboard'});
+        store.dispatch('notification/displayMessage', {
+            value: 'Ошибка (500) в получении/обработке данных',
+            type: 'error',
+        });
     }
 
     return Promise.reject(error)

@@ -3,14 +3,21 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Repositories\TournamentRepository;
 use App\Http\Requests\TournamentStoreRequest;
 use App\Models\Tournament;
 
 class TournamentController extends Controller
 {
+    protected $tournamentRepository;
+
+    public function __construct() {
+        $this->tournamentRepository = app(TournamentRepository::class);
+    }
+
     public function index()
     {
-
+        return $this->tournamentRepository->getAll();
     }
 
     public function store(TournamentStoreRequest $request)
@@ -25,11 +32,13 @@ class TournamentController extends Controller
     }
 
     public function edit($id) {
-        return Tournament::query()->find($id);
+        return $this->tournamentRepository->getById($id);
     }
 
+
     public function update(TournamentStoreRequest $request, $id) {
-        Tournament::query()->update([
+        $tournament = $this->tournamentRepository->getById($id);
+        $tournament->update([
             'title' => $request->title,
             'yacht' => $request->yacht,
             'description' => $request->description,

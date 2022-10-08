@@ -76,6 +76,15 @@ export default [
             auth: true,
         }
     },
+    {
+        path: '/admin/stage/:id',
+        name: 'stage.edit',
+        component: () => import('../views/admin/stage/edit.vue'),
+        meta: {
+            layout: 'Admin',
+            auth: true,
+        }
+    },
 
 
     {

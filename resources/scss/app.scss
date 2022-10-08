@@ -3,7 +3,7 @@
     flex-direction: column;
 }
 .notification {
-    position: absolute;
+    position: fixed;
     width: 300px;
     height: 100px;
     top: 60px;
@@ -43,4 +43,48 @@
     100% {
         opacity: 0;
     }
+}
+
+.race-table {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    input {
+        width: 50px;
+        height: 20px;
+    }
+}
+.race-table__header {
+    border-top: 1px solid #ccc;
+    .race-table__item {
+        border-right: 1px solid #ccc;
+    }
+}
+.race-table__item {
+    height: 30px;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.race-table__name {
+    justify-content: flex-start;
+    padding: 0px 5px;
+    width: 175px;
+    border-left: 1px solid #ccc;
+}
+.race-table__result {
+    width: 85px;
+}
+.race-table__total {
+    width: 50px;
+}
+.race-table__row {
+    display: flex;
+}
+.race-table__body {
+    display: flex;
+}
+.race-table__column {
+    border-right: 1px solid #ccc;
 }

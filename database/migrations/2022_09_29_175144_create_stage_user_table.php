@@ -13,11 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('races', function (Blueprint $table) {
+        Schema::create('stage_user', function (Blueprint $table) {
             $table->id();
-            $table->integer('stage_id')->unsigned();
-            $table->integer('group_id')->default(0);
-            $table->enum('status', ['default', 'group', 'flot'])->default('default');
+            $table->foreignId('stage_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+//            $table->integer('team_id')->unsigned();
+//            $table->string('nickname');
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('races');
+        Schema::dropIfExists('stage_users');
     }
 };
