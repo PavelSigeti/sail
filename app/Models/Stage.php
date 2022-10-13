@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,8 +13,22 @@ class Stage extends Model
     protected $fillable = [
         'tournament_id', 'register_start', 'register_end',
         'race_start', 'title', 'excerpt',
-        'description', 'status'
+        'description', 'status', 'race_amount_drop',
+        'race_amount_group_drop', 'race_amount_flot_drop'
     ];
+
+    public function getRegisterStartAttribute($value)
+    {
+        return Carbon::parse($value)->format('Y-m-d\TH:i');
+    }
+    public function getRegisterEndAttribute($value)
+    {
+        return Carbon::parse($value)->format('Y-m-d\TH:i');
+    }
+    public function getRaceStartAttribute($value)
+    {
+        return Carbon::parse($value)->format('Y-m-d\TH:i');
+    }
 
     public function tournament()
     {

@@ -20,6 +20,7 @@ class StageRepository extends CoreRepository
         $result = $this->startConditions()
             ->select($columns)
             ->where('tournament_id', $id)
+            ->orderBy('id', 'desc')
             ->get();
 
         return $result;
@@ -51,4 +52,17 @@ class StageRepository extends CoreRepository
         return $result;
     }
 
+    public function getStageDrops($id, $status) {
+        $dropField = [
+            'default' => 'race_amount_drop',
+            'group' => 'race_amount_group_drop',
+            'flot' => 'race_amount_flot_drop',
+        ];
+        $result = $this->startConditions()
+            ->find($id)
+            ->pluck($dropField[$status])
+            ->first();
+
+        return $result;
+    }
 }

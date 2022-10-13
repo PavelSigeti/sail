@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('races', function (Blueprint $table) {
+        Schema::create('stage_results', function (Blueprint $table) {
             $table->id();
             $table->integer('stage_id')->unsigned();
-            $table->integer('group_id')->default(1);
-            $table->enum('status', ['default', 'group', 'flot'])->default('default');
+            $table->integer('user_id')->unsigned();
+            $table->integer('result');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('races');
+        Schema::dropIfExists('stage_results');
     }
 };

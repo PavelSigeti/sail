@@ -23,6 +23,9 @@ return new class extends Migration
             $table->enum('status', ['active', 'default', 'group', 'flot', 'finished'])->default('active');
             $table->text('excerpt')->nullable();
             $table->text('description')->nullable();
+            $table->integer('race_amount_drop')->default(1);
+            $table->integer('race_amount_group_drop')->default(1);
+            $table->integer('race_amount_flot_drop')->default(1);
             $table->timestamps();
         });
     }

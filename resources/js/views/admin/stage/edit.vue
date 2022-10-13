@@ -15,8 +15,20 @@
             <input type="datetime-local" id="race_start" v-model="race_start">
         </div>
         <div class="form-control">
-            <label for="title">Название</label>
+            <label for="title">Название Этапа</label>
             <input type="text" id="title" v-model="title">
+        </div>
+        <div class="form-control">
+            <label for="race_amount_drop">Кол-во выбрасов (до 18 челов)</label>
+            <input type="text" id="race_amount_drop" v-model="race_amount_drop">
+        </div>
+        <div class="form-control">
+            <label for="race_amount_drop">Кол-во выбрасов в группах (от 19 челов)</label>
+            <input type="text" id="race_amount_group_drop" v-model="race_amount_group_drop">
+        </div>
+        <div class="form-control">
+            <label for="race_amount_drop">Кол-во выбрасов во флотах (от 19 челов)</label>
+            <input type="text" id="race_amount_flot_drop" v-model="race_amount_flot_drop">
         </div>
         <div class="form-control">
             <label for="title">Краткое описание</label>
@@ -33,7 +45,12 @@
     <AppUsersTables v-if="status === 'active' && users" :users="users"></AppUsersTables>
 
     <div class="stage-table" v-else v-for="(groups, raceStatus, idx) in statusGroup" :key="idx">
-        <AppRaceTable v-for="groupId in groups" :stageId="id" :groupId="groupId" :status="raceStatus" :key="groupId"></AppRaceTable>
+        <AppRaceTable v-for="groupId in groups"
+                      :stageId="id"
+                      :groupId="groupId"
+                      :status="raceStatus"
+                      :key="groupId"
+        ></AppRaceTable>
     </div>
 
 
@@ -69,6 +86,9 @@ export default {
         const description = ref('');
         const users = ref();
         const status = ref();
+        const race_amount_drop = ref();
+        const race_amount_group_drop = ref();
+        const race_amount_flot_drop = ref();
 
         const statusGroup = ref();
 
@@ -88,9 +108,10 @@ export default {
                 description.value = data.data.description;
                 users.value = data.data.users;
                 status.value = data.data.status;
-
+                race_amount_drop.value = data.data.race_amount_drop;
+                race_amount_group_drop.value = data.data.race_amount_group_drop;
+                race_amount_flot_drop.value = data.data.race_amount_flot_drop;
                 await statusGroupFetch();
-
             } catch (e) {
                 console.log(e.message);
             }
@@ -99,27 +120,24 @@ export default {
         const submit = async () => {
             loading.value = true;
             try {
-                const data = await axios.patch(`/api/admin/stage/${id}`, {
+                await axios.patch(`/api/admin/stage/${id}/update`, {
                     title: title.value,
-                    yacht: yacht.value,
                     description: description.value,
+                    register_start: register_start.value,
+                    register_end: register_end.value,
+                    race_start: race_start.value,
+                    race_amount_drop: race_amount_drop.value,
+                    race_amount_group_drop: race_amount_group_drop.value,
+                    race_amount_flot_drop: race_amount_flot_drop.value,
                 });
                 store.dispatch('notification/displayMessage', {
-                    value: 'Серия успешно создана',
+                    value: 'Этап успешно обнавлен',
                     type: 'primary',
                 });
-                const id = data.data.id;
-                tournaments.value.unshift({
-                    id,
-                    title: title.value,
-                    yacht: yacht.value,
-                });
-                title.value = '';
-                yacht.value = '';
-                description.value = '';
             } catch (e) {
+                console.log(e.message);
                 store.dispatch('notification/displayMessage', {
-                    value: 'Ошибка создания серии',
+                    value: 'Ошибка при обновлении этапа',
                     type: 'error',
                 });
             }
@@ -141,7 +159,8 @@ export default {
             register_start, register_end, race_start,
             title, excerpt, description,
             submit, users, status,
-            startStage, id, statusGroup
+            startStage, id, statusGroup,
+            race_amount_drop, race_amount_group_drop, race_amount_flot_drop,
 
         }
     }

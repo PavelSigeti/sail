@@ -18,7 +18,7 @@
     </form>
 
     <br><br>
-    <AppStageCreate />
+    <AppStageCreate @create="addStage"/>
 
     <br><br>
     <router-link v-for="stage in stages" :key="stage.id" :to="{name: 'stage.edit', params: {id:stage.id}}">
@@ -51,8 +51,16 @@ export default {
         const loading = ref(false);
 
         const stages = ref();
-
         const id = route.params.id;
+
+        const addStage = (submitData) => {
+            console.log('submitData.emit', submitData);
+            stages.value.unshift({
+                id: submitData.id,
+                race_start: submitData.race_start,
+                title: submitData.title,
+            });
+        }
 
         onMounted(async () => {
             try {
@@ -64,6 +72,7 @@ export default {
                 const stageData = await axios.get(`/api/admin/stage/${id}`);
                 stages.value = stageData.data;
 
+                console.log(stages.value);
             } catch (e) {
                 console.log(e.message);
             }
@@ -95,7 +104,8 @@ export default {
 
         return {
             submit, title, yacht,
-            description, loading, stages
+            description, loading, stages,
+            addStage,
         }
     }
 }

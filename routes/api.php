@@ -32,7 +32,7 @@ Route::group([/*'middleware' => ['auth:sanctum',  'admin' ]*/], function () {
     Route::post('/admin/stage/store', [\App\Http\Controllers\Admin\StageController::class, 'store']);
     Route::get('/admin/stage/{id}', [\App\Http\Controllers\Admin\StageController::class, 'tournament']);
     Route::get('/admin/stage/{id}/edit', [\App\Http\Controllers\Admin\StageController::class, 'edit']);
-
+    Route::patch('/admin/stage/{id}/update', [\App\Http\Controllers\Admin\StageController::class, 'update']);
 
     Route::post('/admin/stage/{id}/start', [\App\Http\Controllers\Admin\StageController::class, 'startStage']);
 
@@ -48,10 +48,13 @@ Route::group([/*'middleware' => ['auth:sanctum',  'admin' ]*/], function () {
     Route::post('/admin/race/create', [\App\Http\Controllers\Admin\RaceController::class, 'createRace']);
     Route::post('/admin/race/{id}/remove', [\App\Http\Controllers\Admin\RaceController::class, 'destroy']);
 
+
+    Route::get('/admin/stage/{stageId}/{groupId}/{status}/total', [\App\Http\Controllers\Admin\StageController::class, 'getStageGroupStatusTotal']);
+
 });
 
 
 Route::group([], function() {
-    Route::get('/stage/{id}/{groupId}', \App\Http\Controllers\Public\StageController::class);
+    Route::get('/stage/{id}', \App\Http\Controllers\Public\StageController::class);
 });
 

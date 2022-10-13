@@ -1,10 +1,30 @@
 <template>
     <h1>Register</h1>
     <form @submit.prevent="register">
-        <input type="name" placeholder="Name" v-model="name">
-        <input type="email" placeholder="Email" v-model="email">
-        <input type="password" placeholder="Password" v-model="password">
-        <input type="password" placeholder="Password again" v-model="password_confirmation">
+        <div class="form-control">
+            <label for="name">Имя</label>
+            <input type="text" id="name" placeholder="Имя" v-model="name">
+        </div>
+        <div class="form-control">
+            <label for="name">Фамилия</label>
+            <input type="text" id="surname" placeholder="Фамилия" v-model="surname">
+        </div>
+        <div class="form-control">
+            <label for="name">Никнейм в игре</label>
+            <input type="text" id="nickname" placeholder="Никнейм в игре" v-model="nickname">
+        </div>
+        <div class="form-control">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" placeholder="E-mail" v-model="email">
+        </div>
+        <div class="form-control">
+            <label for="password">Пароль</label>
+            <input type="password" id="password" placeholder="Password" v-model="password">
+        </div>
+        <div class="form-control">
+            <label for="password_confirmation">Подтверждение пароля</label>
+            <input type="password" id="password_confirmation" placeholder="Password" v-model="password_confirmation">
+        </div>
         <button>Зарегистрироваться</button>
     </form>
 </template>

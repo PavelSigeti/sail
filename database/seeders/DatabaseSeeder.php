@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call(TournamentSeeder::class);
         $this->call(StageSeeder::class);
         $this->call(StageUserSeeder::class);
+        $this->call(UniversitySeeder::class);
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',

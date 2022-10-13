@@ -42,17 +42,7 @@ class RaceController extends Controller
 
         $race->users()->sync($results);
 
-//        foreach ($results as $raceId => $place) {
-//            $race->users()->detach($raceId);
-//            if($place === null) {
-//                $race->users()->attach($raceId, ['place' => count($results) + 1]);
-//            } else {
-//                $race->users()->attach($raceId, ['place' => $place]);
-//            }
-//        }
-
-
-        return ['result111' => $results, ];
+        return true;
     }
 
     public function createRace(CreateRaceRequest $request, CreateRaceAction $action)

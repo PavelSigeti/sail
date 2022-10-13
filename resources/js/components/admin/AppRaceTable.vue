@@ -16,9 +16,14 @@
                 </div>
             </div>
             <div class="race-table__column" v-for="(race) in raceData" :key="race.race_id">
-                <AppRaceColumn :raceId="race.race_id" />
+                <AppRaceColumn :raceId="race.race_id" @update="getTotal"/>
                 <div class="race-table__item race-table__result">
                     <button @click="remove(race.race_id)">Удалить</button>
+                </div>
+            </div>
+            <div class="race-table__column">
+                <div class="race-table__item race-table__total" v-for="(total, key) in totalData" :key="key">
+                    {{total}}
                 </div>
             </div>
         </div>
@@ -40,9 +45,18 @@ export default {
         const raceData = ref({});
         const usersData = ref({});
         const lastRaceId = ref();
+        const totalData = ref();
 
         const raceAmount = computed( () => Object.keys(raceData.value).length ?? 0);
 
+        const getTotal = async () => {
+            try {
+                const total = await axios.get(`/api/admin/stage/${props.stageId}/${props.groupId}/${props.status}/total`);
+                totalData.value = total.data;
+            } catch (e) {
+                console.log(e.message);
+            }
+        };
 
         onMounted(async () => {
             try {
@@ -51,11 +65,11 @@ export default {
                 );
                 raceData.value = races.data;
 
-                console.log('raceData', raceData.value);
-
                 lastRaceId.value = raceData.value[0].race_id;
                 const users = await axios.get(`/api/admin/race/${lastRaceId.value}/users`);
                 usersData.value = users.data;
+
+                await getTotal();
             } catch (e) {
                 console.log(e.message);
             }
@@ -93,7 +107,8 @@ export default {
 
         return {
             raceData, raceAmount, usersData,
-            addRace, remove
+            addRace, remove, totalData,
+            getTotal,
         }
     }
 }

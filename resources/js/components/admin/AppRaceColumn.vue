@@ -17,7 +17,8 @@ import { useStore } from 'vuex';
 export default {
     name: "AppRaceColumn",
     props: ['raceId'],
-    setup(props) {
+    emits: ['update'],
+    setup(props, { emit }) {
         const store = useStore();
 
         const result = ref([]);
@@ -32,14 +33,14 @@ export default {
 
         const submit = async () => {
             try {
-                const data = await axios.post(`/api/admin/race/${props.raceId}/results`, {
+                await axios.post(`/api/admin/race/${props.raceId}/results`, {
                     result: result.value,
                 });
                 store.dispatch('notification/displayMessage', {
                     value: 'Данные гонки обнавлены',
                     type: 'primary',
                 });
-                console.log(data.data);
+                emit('update');
             } catch (e) {
                 store.dispatch('notification/displayMessage', {
                     value: 'Ошибка при обновлении данных гонки',

@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent="submit">
+    <form>
         <div class="form-control">
             <label for="register_start">Начало регистрации</label>
             <input type="datetime-local" id="register_start" v-model="register_start">
@@ -25,19 +25,20 @@
             <textarea id="description" v-model="description"></textarea>
         </div>
 
-        <button>Создать</button>
+        <button @click.prevent="submit">Создать</button>
     </form>
 </template>
 
 <script>
-import { ref } from 'vue';
+import {ref} from 'vue';
 import axios from "axios";
-import { useRoute } from 'vue-router';
-import { useStore } from 'vuex';
+import {useRoute} from 'vue-router';
+import {useStore} from 'vuex';
 
 export default {
     name: "AppStageCreate",
-    setup() {
+    emits: ['create'],
+    setup(_, {emit}) {
         const route = useRoute();
         const store = useStore();
 
@@ -51,17 +52,8 @@ export default {
         const description = ref('');
 
         const submit = async () => {
-          try {
-              console.log({
-                  tournament_id: id,
-                  register_start: register_start.value,
-                  register_end: register_end.value,
-                  race_start: race_start.value,
-                  title: title.value,
-                  excerpt: excerpt.value,
-                  description: description.value,
-              });
-                const data = await axios.post('/api/admin/stage/store', {
+            try {
+                const response = await axios.post('/api/admin/stage/store', {
                     tournament_id: id,
                     register_start: register_start.value,
                     register_end: register_end.value,
@@ -70,17 +62,17 @@ export default {
                     excerpt: excerpt.value,
                     description: description.value,
                 });
-              store.dispatch('notification/displayMessage', {
-                  value: 'Этап успешно создана',
-                  type: 'primary',
-              });
-          } catch(e) {
-              console.log(e);
-              store.dispatch('notification/displayMessage', {
-                  value: 'Ошибка при создании этапа',
-                  type: 'error',
-              });
-          }
+                emit('create', response.data);
+                store.dispatch('notification/displayMessage', {
+                    value: 'Этап успешно создана',
+                    type: 'primary',
+                });
+            } catch (e) {
+                store.dispatch('notification/displayMessage', {
+                    value: 'Ошибка при создании этапа',
+                    type: 'error',
+                });
+            }
         };
 
         return {
