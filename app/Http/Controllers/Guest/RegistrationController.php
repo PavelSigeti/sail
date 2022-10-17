@@ -18,5 +18,7 @@ class RegistrationController extends Controller
     public function __invoke()
     {
         $universities = $this->universityRepository->getAll();
+
+        return $universities;
     }
 }

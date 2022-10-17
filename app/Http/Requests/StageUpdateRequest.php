@@ -33,7 +33,7 @@ class StageUpdateRequest extends FormRequest
             'description' => 'nullable|string',
             'race_amount_drop' => 'required|integer',
             'race_amount_group_drop' => 'required|integer',
-            'race_amount_flot_drop' => 'required|integer',
+            'race_amount_fleet_drop' => 'required|integer',
         ];
     }
 }

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Actions\Admin\CalcTotal;
+use App\Actions\Admin\CreateFleets;
+use App\Actions\Admin\SortGroupResult;
 use App\Actions\Admin\StageStartAction;
 use App\Http\Controllers\Controller;
 use App\Http\Repositories\RaceRepository;
@@ -60,7 +62,24 @@ class StageController extends Controller
         return $action($stage);
     }
 
-    public function getStageGroupStatusTotal($stageId, $groupId, $status, CalcTotal $action)
+    public function finishGroup($id, SortGroupResult $sortAction, CreateFleets $createFleetsAction)
+    {
+        $stage = $this->stageRepository->getById($id);
+        $status = $stage->status;
+        $groups = $this->raceRepository->getStageStatusGroup($id)[$status];
+
+        $drops = $this->stageRepository->getStageDrops($id, $status);
+
+        $groupsResult = [];
+        foreach($groups as $groupId) {
+            $result = $this->userRepository->getGroupData($id, $groupId, $status);
+            $groupsResult[$groupId] = $sortAction($result, $drops);
+        }
+
+        return $createFleetsAction($groupsResult, $stage);
+    }
+
+    public function getTotal($stageId, $groupId, $status, CalcTotal $action)
     {
         $result = $this->userRepository->getGroupData($stageId, $groupId, $status);
         $drops = $this->stageRepository->getStageDrops($stageId, $status);
@@ -81,7 +100,7 @@ class StageController extends Controller
             'description' => $request->description,
             'race_amount_drop' => $request->race_amount_drop,
             'race_amount_group_drop' => $request->race_amount_group_drop,
-            'race_amount_flot_drop' => $request->race_amount_flot_drop,
+            'race_amount_fleet_drop' => $request->race_amount_fleet_drop,
         ]);
 
         return true;

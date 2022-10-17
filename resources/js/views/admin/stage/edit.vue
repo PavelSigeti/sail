@@ -28,7 +28,7 @@
         </div>
         <div class="form-control">
             <label for="race_amount_drop">Кол-во выбрасов во флотах (от 19 челов)</label>
-            <input type="text" id="race_amount_flot_drop" v-model="race_amount_flot_drop">
+            <input type="text" id="race_amount_fleet_drop" v-model="race_amount_fleet_drop">
         </div>
         <div class="form-control">
             <label for="title">Краткое описание</label>
@@ -50,11 +50,11 @@
                       :groupId="groupId"
                       :status="raceStatus"
                       :key="groupId"
+                      ref="child"
         ></AppRaceTable>
     </div>
 
-
-    <button @click="startStage" v-if="status === 'active'">Начать этап</button>
+    <TheStageStatus v-if="status" :status="status" :id="id" @update="statusGroupFetch"/>
 
 </template>
 
@@ -62,14 +62,15 @@
 import {onMounted, ref} from 'vue';
 import axios from "axios";
 import { useRoute } from 'vue-router';
+import { useStore } from 'vuex';
 import AppUsersTables from "@/components/ui/AppUsersTables.vue";
 import AppRaceTable from "@/components/admin/AppRaceTable.vue";
-import { useStore } from 'vuex';
+import TheStageStatus from "@/components/admin/TheStageStatus.vue";
 
 export default {
     name: "stage.edit",
     components: {
-        AppUsersTables, AppRaceTable
+        AppUsersTables, AppRaceTable, TheStageStatus
     },
     setup() {
         const loading = ref(false);
@@ -88,13 +89,20 @@ export default {
         const status = ref();
         const race_amount_drop = ref();
         const race_amount_group_drop = ref();
-        const race_amount_flot_drop = ref();
+        const race_amount_fleet_drop = ref();
+
+        const child = ref(null);
 
         const statusGroup = ref();
 
-        const statusGroupFetch = async () => {
-            const statusGroupData = await axios.get(`/api/admin/stage/${id}/meta`);
-            statusGroup.value = statusGroupData.data;
+        const statusGroupFetch = async (payload) => {
+            try {
+                const statusGroupData = await axios.get(`/api/admin/stage/${id}/meta`);
+                statusGroup.value = statusGroupData.data;
+                status.value = payload;
+            } catch (e) {
+                console.log(e.message);
+            }
         }
 
         onMounted( async() => {
@@ -107,11 +115,10 @@ export default {
                 excerpt.value = data.data.excerpt;
                 description.value = data.data.description;
                 users.value = data.data.users;
-                status.value = data.data.status;
                 race_amount_drop.value = data.data.race_amount_drop;
                 race_amount_group_drop.value = data.data.race_amount_group_drop;
-                race_amount_flot_drop.value = data.data.race_amount_flot_drop;
-                await statusGroupFetch();
+                race_amount_fleet_drop.value = data.data.race_amount_fleet_drop;
+                await statusGroupFetch(data.data.status);
             } catch (e) {
                 console.log(e.message);
             }
@@ -128,8 +135,11 @@ export default {
                     race_start: race_start.value,
                     race_amount_drop: race_amount_drop.value,
                     race_amount_group_drop: race_amount_group_drop.value,
-                    race_amount_flot_drop: race_amount_flot_drop.value,
+                    race_amount_fleet_drop: race_amount_fleet_drop.value,
                 });
+                for (let comp of child.value) {
+                    comp.getTotal();
+                }
                 store.dispatch('notification/displayMessage', {
                     value: 'Этап успешно обнавлен',
                     type: 'primary',
@@ -144,24 +154,14 @@ export default {
             loading.value = false;
         };
 
-        const startStage = async () => {
-            try {
-                const data = await axios.post(`/api/admin/stage/${id}/start`);
-                status.value = data.data.status;
-
-                await statusGroupFetch();
-            } catch (e) {
-                console.log(e.message);
-            }
-        };
 
         return {
             register_start, register_end, race_start,
             title, excerpt, description,
             submit, users, status,
-            startStage, id, statusGroup,
-            race_amount_drop, race_amount_group_drop, race_amount_flot_drop,
-
+            id, statusGroup, child,
+            race_amount_drop, race_amount_group_drop, race_amount_fleet_drop,
+            statusGroupFetch
         }
     }
 }

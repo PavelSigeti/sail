@@ -27,7 +27,6 @@ class RaceRepository extends CoreRepository
         return $result;
     }
 
-
     public function getRaceUsers($id) {
         $columns = [
             'user_id', 'name',
@@ -88,11 +87,23 @@ class RaceRepository extends CoreRepository
         $result = $this->startConditions()
             ->where('stage_id', $id)
             ->get()
-            ->unique('group_id')
-            ->mapToGroups(function ($item, $key) {
-                return [$item['status'] => $item['group_id']];
-            })
-            ->unique();
+            ->groupBy('status')
+            ->map(function ($item) {
+                return $item->unique('group_id')->pluck('group_id');
+            });
+        if($result->has('group')) {
+            return $result->forget('group');
+        }
+        return $result;
+    }
+
+    public function getSameRaces($stageId, $groupId, $status)
+    {
+        $result = $this->startConditions()
+            ->where('stage_id', $stageId)
+            ->where('group_id', $groupId)
+            ->where('status', $status)
+            ->count();
 
         return $result;
     }

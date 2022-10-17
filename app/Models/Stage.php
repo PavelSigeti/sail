@@ -14,7 +14,7 @@ class Stage extends Model
         'tournament_id', 'register_start', 'register_end',
         'race_start', 'title', 'excerpt',
         'description', 'status', 'race_amount_drop',
-        'race_amount_group_drop', 'race_amount_flot_drop'
+        'race_amount_group_drop', 'race_amount_fleet_drop'
     ];
 
     public function getRegisterStartAttribute($value)

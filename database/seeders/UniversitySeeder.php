@@ -15,13 +15,13 @@ class UniversitySeeder extends Seeder
     public function run()
     {
         University::query()->create([
-            'name' => 'Без университета',
-        ]);
-        University::query()->create([
             'name' => 'Университет ИТМО',
         ]);
         University::query()->create([
             'name' => 'СПбГУ',
+        ]);
+        University::query()->create([
+            'name' => 'ТНУ',
         ]);
     }
 }

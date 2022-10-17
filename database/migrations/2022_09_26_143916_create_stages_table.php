@@ -20,12 +20,12 @@ return new class extends Migration
             $table->dateTime('register_end');
             $table->dateTime('race_start');
             $table->string('title');
-            $table->enum('status', ['active', 'default', 'group', 'flot', 'finished'])->default('active');
+            $table->enum('status', ['active', 'default', 'group', 'fleet', 'finished'])->default('active');
             $table->text('excerpt')->nullable();
             $table->text('description')->nullable();
             $table->integer('race_amount_drop')->default(1);
             $table->integer('race_amount_group_drop')->default(1);
-            $table->integer('race_amount_flot_drop')->default(1);
+            $table->integer('race_amount_fleet_drop')->default(1);
             $table->timestamps();
         });
     }

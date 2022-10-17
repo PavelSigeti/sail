@@ -14,6 +14,13 @@
             <input type="text" id="nickname" placeholder="Никнейм в игре" v-model="nickname">
         </div>
         <div class="form-control">
+            <label for="university_id">Университет</label>
+            <select name="university_id" id="university_id">
+                <option value="null" selected>Без университета</option>
+                <option value="{{university.id}}" v-for="university in universities" :key="university.id">{{university.name}}</option>
+            </select>
+        </div>
+        <div class="form-control">
             <label for="email">E-mail</label>
             <input type="email" id="email" placeholder="E-mail" v-model="email">
         </div>
@@ -30,39 +37,59 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import {onMounted, ref} from 'vue';
 import axios from "axios";
-import {useRouter} from "vue-router";
+import {useStore} from 'vuex';
 
 export default {
     name: "Register",
     setup() {
         const name = ref();
+        const surname = ref();
+        const nickname = ref();
         const email = ref();
+        const university_id = ref();
         const password = ref();
         const password_confirmation = ref();
 
-        const router = useRouter();
+        const store = useStore();
+
+        const universities = ref();
 
         const register = async () => {
             try {
                 await axios.get('/sanctum/csrf-cookie');
-                const data = await axios.post('/register',{
+                await axios.post('/register',{
                     name: name.value,
                     email: email.value,
+                    surname: surname.value,
+                    nickname: nickname.value,
                     password: password.value,
                     password_confirmation: password_confirmation.value,
+                    university_id: +university_id.value,
                 });
-                localStorage.setItem('x_xsrf_token', data.config.headers['X-XSRF-TOKEN']);
-                router.push({name: 'Dashboard',});
+                store.dispatch('auth/login', {
+                    email: email.value,
+                    password: password.value,
+                });
             } catch (e) {
                 console.log(e.message);
             }
         };
 
+        onMounted(async () => {
+            try {
+                const response = await axios.get('/api/universities');
+                universities.value = response.data;
+            } catch (e) {
+                console.log(e.message);
+            }
+        });
+
         return {
             name, email, password, password_confirmation,
-            register,
+            register, university_id, universities,
+            surname, nickname,
         };
     }
 

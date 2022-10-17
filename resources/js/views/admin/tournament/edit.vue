@@ -71,8 +71,6 @@ export default {
 
                 const stageData = await axios.get(`/api/admin/stage/${id}`);
                 stages.value = stageData.data;
-
-                console.log(stages.value);
             } catch (e) {
                 console.log(e.message);
             }

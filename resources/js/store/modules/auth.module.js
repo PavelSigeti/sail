@@ -15,9 +15,10 @@ export default {
             state.token = token;
             localStorage.setItem(TOKEN_KEY, token);
         },
-        logout(state) {
+        async logout(state) {
             state.token = null;
             localStorage.removeItem(TOKEN_KEY);
+            await axios.get('/sanctum/csrf-cookie');
         }
     },
     actions: {

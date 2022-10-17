@@ -30,11 +30,10 @@ class UserRepository extends CoreRepository
         return $result;
     }
 
-    public function getGroupData($groupId, $stageId, $status)
+    public function getGroupData($stageId, $groupId, $status)
     {
         $result = $this->startConditions()
             ->join('race_user', 'users.id', '=', 'race_user.user_id')
-            ->join('stage_user', 'users.id', '=', 'stage_user.user_id')
             ->join('races', 'race_user.race_id', '=', 'races.id')
             ->select('race_user.race_id', 'users.id', 'race_user.place',
                 'races.group_id', 'races.stage_id',

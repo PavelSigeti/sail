@@ -21,10 +21,14 @@ class StageSeeder extends Seeder
             'register_start' => Carbon::now(),
             'register_end' => Carbon::tomorrow(),
             'race_start' => Carbon::tomorrow(),
-//            'race_amount' => 3,
-//            'race_amount_group' => 3,
-//            'race_amount_group_drop' => 0,
-//            'race_amount_flots' => 4,
+            'title' => '1 этап J70',
+        ]);
+
+        Stage::query()->insert([
+            'tournament_id' => 2,
+            'register_start' => Carbon::now(),
+            'register_end' => Carbon::tomorrow(),
+            'race_start' => Carbon::tomorrow(),
             'title' => '1 этап J70',
         ]);
     }

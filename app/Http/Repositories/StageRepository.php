@@ -56,7 +56,7 @@ class StageRepository extends CoreRepository
         $dropField = [
             'default' => 'race_amount_drop',
             'group' => 'race_amount_group_drop',
-            'flot' => 'race_amount_flot_drop',
+            'fleet' => 'race_amount_fleet_drop',
         ];
         $result = $this->startConditions()
             ->find($id)
@@ -65,4 +65,5 @@ class StageRepository extends CoreRepository
 
         return $result;
     }
+
 }

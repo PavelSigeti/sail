@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('stage_id')->unsigned();
             $table->integer('group_id')->default(1);
-            $table->enum('status', ['default', 'group', 'flot'])->default('default');
+            $table->enum('status', ['default', 'group', 'fleet'])->default('default');
             $table->timestamps();
         });
     }

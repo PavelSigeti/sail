@@ -17,7 +17,7 @@
             </div>
             <div class="race-table__column" v-for="(race) in raceData" :key="race.race_id">
                 <AppRaceColumn :raceId="race.race_id" @update="getTotal"/>
-                <div class="race-table__item race-table__result">
+                <div class="race-table__item race-table__result" v-if="raceData.length > 1">
                     <button @click="remove(race.race_id)">Удалить</button>
                 </div>
             </div>
@@ -90,7 +90,8 @@ export default {
                     group_id: race.group_id,
                     status: race.status,
                 });
-                console.log(raceData.value);
+
+                await getTotal();
             } catch (e) {
                 console.log(e.message);
             }
@@ -100,6 +101,8 @@ export default {
             try {
                 await axios.post(`/api/admin/race/${id}/remove`);
                 raceData.value.splice(raceData.value.findIndex(item => item.race_id === id), 1);
+
+                await getTotal();
             } catch (e) {
                 console.log(e.message);
             }

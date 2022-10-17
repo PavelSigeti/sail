@@ -26,7 +26,6 @@ class CalcTotal
             $response[$userId] = $results[$userId]->sum(['place']);
         }
 
-
         return $response;
     }
 }

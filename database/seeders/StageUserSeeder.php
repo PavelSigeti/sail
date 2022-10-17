@@ -22,9 +22,24 @@ class StageUserSeeder extends Seeder
             StageUser::query()->insert([
                 'stage_id' => 1,
                 'user_id' => $user->id,
-//                'team_id' => $user->team_id,
-//                'nickname' => $user->nickname,
+                'team_id' => $user->team_id,
+                'nickname' => $user->nickname,
             ]);
+        }
+        $k = 0;
+        foreach ($users as $user)
+        {
+            $k++;
+            if($k < 5) {
+                StageUser::query()->insert([
+                    'stage_id' => 2,
+                    'user_id' => $user->id,
+                    'team_id' => $user->team_id,
+                    'nickname' => $user->nickname,
+                ]);
+                continue;
+            }
+            break;
         }
     }
 }

@@ -57,8 +57,12 @@ class RaceController extends Controller
     public function destroy($id)
     {
         $race = $this->raceRepository->getById($id);
+        $count = $this->raceRepository->getSameRaces($race->stage_id, $race->group_id, $race->status);
 
-        $race->delete();
+        if($count > 1) {
+            $race->delete();
+        }
+
 
         return true;
     }

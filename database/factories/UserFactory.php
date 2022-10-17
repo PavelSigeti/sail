@@ -19,8 +19,11 @@ class UserFactory extends Factory
     {
         return [
             'name' => fake()->name(),
+            'surname' => 'Test',
+            'university_id' => $this->faker->randomElement([null, 1, 2, 3]),
+            'nickname' => 'Test-'.$this->faker->name(),
             'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
+//            'email_verified_at' => now(),
             'password' => bcrypt('123'), // 123
             'remember_token' => Str::random(10),
             'role' => 'player',
@@ -32,10 +35,10 @@ class UserFactory extends Factory
      *
      * @return static
      */
-    public function unverified()
-    {
-        return $this->state(fn (array $attributes) => [
-            'email_verified_at' => null,
-        ]);
-    }
+//    public function unverified()
+//    {
+//        return $this->state(fn (array $attributes) => [
+//            'email_verified_at' => null,
+//        ]);
+//    }
 }
