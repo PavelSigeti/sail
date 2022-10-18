@@ -44,7 +44,7 @@
 
     <AppUsersTables v-if="status === 'active' && users" :users="users"></AppUsersTables>
 
-    <div class="stage-table" v-else v-for="(groups, raceStatus, idx) in statusGroup" :key="idx">
+    <div class="stage-table" v-else-if="status !== 'finished'" v-for="(groups, raceStatus, idx) in statusGroup" :key="idx">
         <AppRaceTable v-for="groupId in groups"
                       :stageId="id"
                       :groupId="groupId"
@@ -56,6 +56,8 @@
 
     <TheStageStatus v-if="status" :status="status" :id="id" @update="statusGroupFetch"/>
 
+    <AppResultTable v-if="status === 'fleet'" status="group" :id="id" />
+
 </template>
 
 <script>
@@ -66,11 +68,13 @@ import { useStore } from 'vuex';
 import AppUsersTables from "@/components/ui/AppUsersTables.vue";
 import AppRaceTable from "@/components/admin/AppRaceTable.vue";
 import TheStageStatus from "@/components/admin/TheStageStatus.vue";
+import AppResultTable from "@/components/public/AppResultTable.vue";
 
 export default {
     name: "stage.edit",
     components: {
-        AppUsersTables, AppRaceTable, TheStageStatus
+        AppUsersTables, AppRaceTable, TheStageStatus,
+        AppResultTable,
     },
     setup() {
         const loading = ref(false);
@@ -137,8 +141,10 @@ export default {
                     race_amount_group_drop: race_amount_group_drop.value,
                     race_amount_fleet_drop: race_amount_fleet_drop.value,
                 });
-                for (let comp of child.value) {
-                    comp.getTotal();
+                if(child.value) {
+                    for (let comp of child.value) {
+                        comp.getTotal();
+                    }
                 }
                 store.dispatch('notification/displayMessage', {
                     value: 'Этап успешно обнавлен',

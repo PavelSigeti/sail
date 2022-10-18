@@ -2,7 +2,7 @@
 
 namespace App\Actions\Admin;
 
-class SortGroupResult
+class SortGroupResultAction
 {
     public function __invoke($results, $drops)
     {

@@ -35,6 +35,14 @@ export default {
             }
         };
 
+        const finishFleetStage = async () => {
+            try {
+                const response = await axios.post(`/api/admin/stage/${id}/finish-fleet`);
+            } catch (e) {
+
+            }
+        };
+
         return {
             status, startStage, finishGroupStage,
             id

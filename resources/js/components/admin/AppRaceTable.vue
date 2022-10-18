@@ -1,6 +1,6 @@
 <template>
     <div class="race-table">
-        <h2>Гонка</h2>
+        <h2>{{raceTitle[$props.status]}} #{{$props.groupId}}</h2>
         <button @click="addRace">Добавить гонку</button>
         <div class="race-table__header">
             <div class="race-table__row">
@@ -15,9 +15,9 @@
                     {{user.name}}
                 </div>
             </div>
-            <div class="race-table__column" v-for="(race) in raceData" :key="race.race_id">
+            <div class="race-table__column" v-for="(race, idx) in raceData" :key="race.race_id">
                 <AppRaceColumn :raceId="race.race_id" @update="getTotal"/>
-                <div class="race-table__item race-table__result" v-if="raceData.length > 1">
+                <div class="race-table__item race-table__result" v-if="raceData.length > 1 && idx+1 !== 1">
                     <button @click="remove(race.race_id)">Удалить</button>
                 </div>
             </div>
@@ -46,6 +46,12 @@ export default {
         const usersData = ref({});
         const lastRaceId = ref();
         const totalData = ref();
+
+        const raceTitle = ref({
+            default: 'Гонка',
+            group: 'Группа',
+            fleet: 'Флот'
+        });
 
         const raceAmount = computed( () => Object.keys(raceData.value).length ?? 0);
 
@@ -111,7 +117,7 @@ export default {
         return {
             raceData, raceAmount, usersData,
             addRace, remove, totalData,
-            getTotal,
+            getTotal, raceTitle
         }
     }
 }

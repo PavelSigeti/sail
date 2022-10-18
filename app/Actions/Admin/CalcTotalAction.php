@@ -2,7 +2,7 @@
 
 namespace App\Actions\Admin;
 
-class CalcTotal
+class CalcTotalAction
 {
     public function __invoke($results, $drops)
     {

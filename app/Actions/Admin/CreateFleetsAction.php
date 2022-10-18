@@ -4,7 +4,7 @@ namespace App\Actions\Admin;
 
 use App\Models\Race;
 
-class CreateFleets
+class CreateFleetsAction
 {
     public function __invoke($groups, $stage)
     {

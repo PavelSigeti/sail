@@ -12,7 +12,8 @@ class RaceRepository extends CoreRepository
         return Model::class;
     }
 
-    public function getStageRaces($stageId, $status, $groupId) {
+    public function getStageRaces($stageId, $status, $groupId)
+    {
         $columns = [
             'id as race_id', 'group_id', 'status',
         ];
@@ -27,7 +28,22 @@ class RaceRepository extends CoreRepository
         return $result;
     }
 
-    public function getRaceUsers($id) {
+    public function getGroupIdsById($stageId)
+    {
+
+        $result = $this->startConditions()
+            ->where('stage_id', $stageId)
+            ->get()
+            ->groupBy('status')
+            ->map(function ($item) {
+                return $item->unique('group_id')->pluck('group_id');
+            });
+
+        return $result;
+    }
+
+    public function getRaceUsers($id)
+    {
         $columns = [
             'user_id', 'name',
         ];
@@ -56,7 +72,7 @@ class RaceRepository extends CoreRepository
             ->where('race_id',$id)
             ->orderBy('user_id')
             ->get()
-            ->mapWithKeys(function ($item, $key) {
+            ->mapWithKeys(function ($item) {
                 return [$item['user_id'] => $item['place']];
             });
 
@@ -97,13 +113,13 @@ class RaceRepository extends CoreRepository
         return $result;
     }
 
-    public function getSameRaces($stageId, $groupId, $status)
+    public function getFirstRaceInGroup($stageId, $groupId, $status)
     {
         $result = $this->startConditions()
             ->where('stage_id', $stageId)
             ->where('group_id', $groupId)
             ->where('status', $status)
-            ->count();
+            ->min('id');
 
         return $result;
     }

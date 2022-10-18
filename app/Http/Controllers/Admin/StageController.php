@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Actions\Admin\CalcTotal;
-use App\Actions\Admin\CreateFleets;
-use App\Actions\Admin\SortGroupResult;
+use App\Actions\Admin\CalcTotalAction;
+use App\Actions\Admin\CreateFleetsAction;
+use App\Actions\Admin\FinishStage;
+use App\Actions\Admin\SortGroupResultAction;
 use App\Actions\Admin\StageStartAction;
 use App\Http\Controllers\Controller;
 use App\Http\Repositories\RaceRepository;
@@ -62,7 +63,7 @@ class StageController extends Controller
         return $action($stage);
     }
 
-    public function finishGroup($id, SortGroupResult $sortAction, CreateFleets $createFleetsAction)
+    public function finishGroup($id, SortGroupResultAction $sortAction, CreateFleetsAction $createFleetsAction)
     {
         $stage = $this->stageRepository->getById($id);
         $status = $stage->status;
@@ -79,7 +80,26 @@ class StageController extends Controller
         return $createFleetsAction($groupsResult, $stage);
     }
 
-    public function getTotal($stageId, $groupId, $status, CalcTotal $action)
+    public function finishFleet($id, SortGroupResultAction $sortAction, FinishStage $finishStage)
+    {
+        $stage = $this->stageRepository->getById($id);
+        $status = $stage->status;
+        $fleets = $this->raceRepository->getStageStatusGroup($id)[$status];
+
+        $drops = $this->stageRepository->getStageDrops($id, $status);
+
+        $fleetsResult = [];
+
+        foreach($fleets as $groupId) {
+            $result = $this->userRepository->getGroupData($id, $groupId, $status);
+            $fleetsResult = array_merge($fleetsResult, $sortAction($result, $drops)->toArray());
+        }
+
+
+        return $finishStage($stage, $fleetsResult);
+    }
+
+    public function getTotal($stageId, $groupId, $status, CalcTotalAction $action)
     {
         $result = $this->userRepository->getGroupData($stageId, $groupId, $status);
         $drops = $this->stageRepository->getStageDrops($stageId, $status);

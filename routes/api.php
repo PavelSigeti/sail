@@ -36,6 +36,7 @@ Route::group([/*'middleware' => ['auth:sanctum',  'admin' ]*/], function () {
 
     Route::post('/admin/stage/{id}/start', [\App\Http\Controllers\Admin\StageController::class, 'startStage']);
     Route::post('/admin/stage/{id}/finish-group', [\App\Http\Controllers\Admin\StageController::class, 'finishGroup']);
+    Route::post('/admin/stage/{id}/finish-fleet', [\App\Http\Controllers\Admin\StageController::class, 'finishFleet']);
 
     Route::get('/admin/stage/{stageId}/races', [\App\Http\Controllers\Admin\RaceController::class, 'getStageRaces']);
     Route::get('/admin/stage/{id}/meta', [\App\Http\Controllers\Admin\StageController::class, 'getStageStatusGroup']);
@@ -57,7 +58,7 @@ Route::group([/*'middleware' => ['auth:sanctum',  'admin' ]*/], function () {
 
 
 Route::group([], function() {
-//    Route::get('/stage/{id}', \App\Http\Controllers\Guest\StageController::class);
+    Route::get('/stage/{id}', [\App\Http\Controllers\Guest\StageController::class, 'getResult']);
     Route::get('/universities', \App\Http\Controllers\Guest\RegistrationController::class);
 });
 

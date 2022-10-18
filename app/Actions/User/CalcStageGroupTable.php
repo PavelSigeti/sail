@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions\Admin;
+namespace App\Actions\User;
 
 class CalcStageGroupTable
 {
@@ -25,10 +25,40 @@ class CalcStageGroupTable
                     $response[$userId]->where('race_id', $dropId)->first()->drop = true;
                 }
             }
-            $response[$userId]['total'] = $results[$userId]->sum(['place']);
+            $response[$userId]['sum'] = $results[$userId]->sum(['place']);
         }
 
+        $rawData = $response->sort(function($a, $b){
+            if($a['sum'] < $b['sum']) {
+                return -1;
+            } elseif ($a['sum'] > $b['sum']) {
+                return 1;
+            }
+            else {
+                $raceAmount = $b->count() - 1;
+                for($i=0; $i < $raceAmount; $i++) {
+                    if($a[$i]->place < $b[$i]->place) {
+                        return -1;
+                    } elseif ($a[$i]->place > $b[$i]->place) {
+                        return 1;
+                    } elseif ($i == $raceAmount-1) {
+                        $aRaceId = $a->max('race_id');
+                        $bRaceId = $b->max('race_id');
 
-        return $response;
+                        $aPlace = $a->where('race_id', $aRaceId)->first()->place;
+                        $bPlace = $b->where('race_id', $bRaceId)->first()->place;
+
+                        if($aPlace < $bPlace) {
+                            return -1;
+                        } else {
+                            return 1;
+                        }
+                    }
+                }
+            }
+        });
+
+
+        return ['races' => $response, 'order' => $rawData->keys()];
     }
 }
