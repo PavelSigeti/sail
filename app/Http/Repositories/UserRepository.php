@@ -35,9 +35,13 @@ class UserRepository extends CoreRepository
         $result = $this->startConditions()
             ->join('race_user', 'users.id', '=', 'race_user.user_id')
             ->join('races', 'race_user.race_id', '=', 'races.id')
+            ->join('stage_user', function($join) {
+                $join->on('users.id', '=', 'stage_user.user_id');
+                $join->on('races.stage_id', '=', 'stage_user.stage_id');
+            })
             ->select('race_user.race_id', 'users.id', 'race_user.place',
                 'races.group_id', 'races.stage_id',
-                'races.status',
+                'races.status', 'users.name', 'users.surname', 'stage_user.nickname'
             )
             ->where('races.stage_id', $stageId)
             ->where('races.group_id', $groupId)

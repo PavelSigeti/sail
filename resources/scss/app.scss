@@ -88,3 +88,11 @@
 .race-table__column {
     border-right: 1px solid #ccc;
 }
+.result-table {
+    border-collapse: collapse;
+    th, td {
+        border: 1px solid #ccc;
+        padding: 10px;
+        text-align: center;
+    }
+}

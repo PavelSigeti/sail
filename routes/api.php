@@ -35,8 +35,8 @@ Route::group([/*'middleware' => ['auth:sanctum',  'admin' ]*/], function () {
     Route::patch('/admin/stage/{id}/update', [\App\Http\Controllers\Admin\StageController::class, 'update']);
 
     Route::post('/admin/stage/{id}/start', [\App\Http\Controllers\Admin\StageController::class, 'startStage']);
+    Route::post('/admin/stage/{id}/finish', [\App\Http\Controllers\Admin\StageController::class, 'finish']);
     Route::post('/admin/stage/{id}/finish-group', [\App\Http\Controllers\Admin\StageController::class, 'finishGroup']);
-    Route::post('/admin/stage/{id}/finish-fleet', [\App\Http\Controllers\Admin\StageController::class, 'finishFleet']);
 
     Route::get('/admin/stage/{stageId}/races', [\App\Http\Controllers\Admin\RaceController::class, 'getStageRaces']);
     Route::get('/admin/stage/{id}/meta', [\App\Http\Controllers\Admin\StageController::class, 'getStageStatusGroup']);

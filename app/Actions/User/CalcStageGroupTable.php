@@ -7,6 +7,7 @@ class CalcStageGroupTable
     public function __invoke($results, $drops)
     {
         $response = clone $results;
+
         $dnf = count($results) + 1;
         foreach ($results as $userId => $user) {
             foreach ($user as $key => $race) {
@@ -16,7 +17,7 @@ class CalcStageGroupTable
             }
             $results[$userId] = $user->sort(function($a, $b){
                 return ($a->place > $b->place) ? 1 : -1;
-            });
+            })->values();
             if($drops > 0 && $results[$userId]->count() >= $drops) {
                 for($i=1; $i<=$drops; $i++) {
                     $dropId = $results[$userId]->last()->race_id;
@@ -26,9 +27,10 @@ class CalcStageGroupTable
                 }
             }
             $response[$userId]['sum'] = $results[$userId]->sum(['place']);
+            $results[$userId]['sum'] = $results[$userId]->sum(['place']);
         }
 
-        $rawData = $response->sort(function($a, $b){
+        $rawData = $results->sort(function($a, $b){
             if($a['sum'] < $b['sum']) {
                 return -1;
             } elseif ($a['sum'] > $b['sum']) {
@@ -58,7 +60,29 @@ class CalcStageGroupTable
             }
         });
 
+        $sortIds = $rawData->keys()->toArray();
 
-        return ['races' => $response, 'order' => $rawData->keys()];
+        $response = $response->sortBy(function($user, $key) use ($sortIds){
+            return array_search($key, $sortIds);
+        })->values();
+
+//
+//        $response = $response->map(function($item) {
+//            $data = $item->mapWithKeys(function($race, $key) {
+//                if($key !== 'sum') {
+//                    return [$key => $race->only(['race_id', 'place', 'drop', 'status'])];
+//                }
+//                return [$key => $race];
+//            });
+//            return $data
+//                ->put('id', $item->first()->id)
+//                ->put('name', $item->first()->name)
+//                ->put('surname', $item->first()->surname)
+//                ->put('nickname', $item->first()->nickname);
+//        });
+//
+
+
+        return $response;
     }
 }

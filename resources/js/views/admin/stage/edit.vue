@@ -44,7 +44,7 @@
 
     <AppUsersTables v-if="status === 'active' && users" :users="users"></AppUsersTables>
 
-    <div class="stage-table" v-else-if="status !== 'finished'" v-for="(groups, raceStatus, idx) in statusGroup" :key="idx">
+    <div class="stage-table" v-if="status !== 'finished' && status !== 'active'" v-for="(groups, raceStatus, idx) in statusGroup" :key="idx">
         <AppRaceTable v-for="groupId in groups"
                       :stageId="id"
                       :groupId="groupId"
@@ -56,7 +56,7 @@
 
     <TheStageStatus v-if="status" :status="status" :id="id" @update="statusGroupFetch"/>
 
-    <AppResultTable v-if="status === 'fleet'" status="group" :id="id" />
+    <AppResultTable v-if="status !== 'active'" :id="id" ref="resultComponent" />
 
 </template>
 
@@ -98,12 +98,14 @@ export default {
         const child = ref(null);
 
         const statusGroup = ref();
+        const resultComponent = ref();
 
         const statusGroupFetch = async (payload) => {
             try {
                 const statusGroupData = await axios.get(`/api/admin/stage/${id}/meta`);
                 statusGroup.value = statusGroupData.data;
                 status.value = payload;
+                resultComponent.value.update();
             } catch (e) {
                 console.log(e.message);
             }
@@ -167,7 +169,7 @@ export default {
             submit, users, status,
             id, statusGroup, child,
             race_amount_drop, race_amount_group_drop, race_amount_fleet_drop,
-            statusGroupFetch
+            statusGroupFetch, resultComponent
         }
     }
 }

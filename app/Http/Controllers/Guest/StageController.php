@@ -22,7 +22,6 @@ class StageController extends Controller
 
     public function getResult($stageId, CalcStageGroupTable $action)
     {
-
         $groupStatus = $this->raceRepository->getGroupIdsById($stageId);
 
         $response = [];
@@ -31,7 +30,6 @@ class StageController extends Controller
             foreach ($group as $groupId) {
                 $result = $this->userRepository->getGroupData($stageId, $groupId, $status);
                 $drops = $this->stageRepository->getStageDrops($stageId, $status);
-
                 $response[$status][$groupId] = $action($result, $drops);
             }
         }

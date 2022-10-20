@@ -59,9 +59,7 @@ class StageRepository extends CoreRepository
             'fleet' => 'race_amount_fleet_drop',
         ];
         $result = $this->startConditions()
-            ->find($id)
-            ->pluck($dropField[$status])
-            ->first();
+            ->find($id)[$dropField[$status]];
 
         return $result;
     }

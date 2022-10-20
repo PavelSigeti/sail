@@ -1,6 +1,7 @@
 <template>
     <button @click="startStage" v-if="status === 'active'">Начать этап</button>
     <button @click="finishGroupStage" v-if="status === 'group'">Завершить групповой этап</button>
+    <button @click="finishStage" v-if="status === 'default' || status === 'fleet'">Завершить регату</button>
 </template>
 
 <script>
@@ -35,17 +36,19 @@ export default {
             }
         };
 
-        const finishFleetStage = async () => {
+        const finishStage = async () => {
             try {
-                const response = await axios.post(`/api/admin/stage/${id}/finish-fleet`);
+                const response = await axios.post(`/api/admin/stage/${id}/finish`);
+                status.value = response.data.status;
+                emit('update', status.value);
             } catch (e) {
-
+                console.log(e.message);
             }
         };
 
         return {
             status, startStage, finishGroupStage,
-            id
+            id, finishStage,
         }
     }
 }

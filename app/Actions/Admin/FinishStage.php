@@ -22,6 +22,6 @@ class FinishStage
             'status' => 'finished',
         ]);
 
-        return true;
+        return $stage;
     }
 }

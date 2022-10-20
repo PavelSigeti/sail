@@ -107,7 +107,7 @@ class RaceRepository extends CoreRepository
             ->map(function ($item) {
                 return $item->unique('group_id')->pluck('group_id');
             });
-        if($result->has('group')) {
+        if($result->has('group') && $result->has('fleet')) {
             return $result->forget('group');
         }
         return $result;
