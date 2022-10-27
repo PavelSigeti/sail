@@ -17,6 +17,7 @@ class StageUpdateRequest extends FormRequest
         return Auth::check() && Auth::user()->role === 'admin';
     }
 
+
     /**
      * Get the validation rules that apply to the request.
      *

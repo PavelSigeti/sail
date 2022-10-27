@@ -22,11 +22,9 @@ class TournamentController extends Controller
 
     public function store(TournamentStoreRequest $request)
     {
-        $tournament = Tournament::query()->create([
-            'title' => $request->title,
-            'yacht' => $request->yacht,
-            'description' => $request->description,
-        ]);
+        $tournament = Tournament::query()->create($request->only([
+            'title', 'yacht', 'description',
+        ]));
 
         return ['id' => $tournament->id];
     }
@@ -38,11 +36,9 @@ class TournamentController extends Controller
 
     public function update(TournamentStoreRequest $request, $id) {
         $tournament = $this->tournamentRepository->getById($id);
-        $tournament->update([
-            'title' => $request->title,
-            'yacht' => $request->yacht,
-            'description' => $request->description,
-        ]);
+        $tournament->update($request->only([
+            'title', 'yacht', 'description',
+        ]));
 
         return true;
     }

@@ -85,7 +85,15 @@ export default [
             auth: true,
         }
     },
-
+    {
+        path: '/settings',
+        name: 'user.settings',
+        component: () => import('../views/user/Settings.vue'),
+        meta: {
+            layout: 'Auth',
+            auth: true,
+        }
+    },
 
     {
         path: '/:pathMatch(.*)*',

@@ -1,3 +1,31 @@
+@font-face {
+    font-family: "Roboto";
+    src: url("../fonts/Roboto-Regular.ttf");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "Roboto";
+    src: url("../fonts/Roboto-Medium.ttf");
+    font-weight: 500;
+}
+@font-face {
+    font-family: "Roboto";
+    src: url("../fonts/Roboto-Bold.ttf");
+    font-weight: 600;
+}
+@font-face {
+    font-family: "Roboto";
+    src: url("../fonts/Roboto-Black.ttf");
+    font-weight: 700;
+}
+body {
+    font-family: 'Roboto';
+    font-size: 16px;
+    color: #242424;
+}
+
+
 .form-control {
     display: flex;
     flex-direction: column;
@@ -94,5 +122,95 @@
         border: 1px solid #ccc;
         padding: 10px;
         text-align: center;
+    }
+}
+.search-container {
+    width: 300px;
+    max-height: 300px;
+    box-shadow: 0px 0px 20px 0px rgba(34, 60, 80, 0.15);
+    border-radius: 10px;
+    padding: 10px;
+    overflow-y: auto;
+}
+.search-candidate {
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    padding: 15px;
+    transition: .3s;
+    cursor: pointer;
+    &:hover {
+        background-color: #eaf1ff;
+        box-shadow: 0px 0px 20px 0px rgba(34, 60, 80, 0.15);
+    }
+
+}
+.search-candidate__nickname {
+    font-weight: 500;
+}
+.search-candidate__id {
+    font-size: .8em;
+    color: #777;
+}
+.search-candidate__name {
+    font-size: .9em;
+    color: #555;
+}
+.user-item {
+    display: flex;
+    background-color: #eaf1ff;
+    width: fit-content;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    overflow:hidden;
+}
+.user-item__content {
+    padding: 15px;
+}
+.user-item__remove {
+    width: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: .3s;
+    &:hover {
+        background-color: #ffd5d5;
+    }
+}
+.user-item__btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 10px;
+    span {
+        font-size: .8em;
+        font-weight: 500;
+        color: #fff;
+        padding: 3px 10px;
+        border-radius: 5px;
+        transition: .3s;
+        cursor: pointer;
+    }
+}
+.user-item__cancel-btn {
+    span {
+        background-color: #f33c3c;
+        &:hover {
+            background-color: #fc6c6c;
+        }
+    }
+}
+.user-item__accept-btn {
+    span {
+        background-color: #36d567;
+        &:hover {
+            background-color: #2cb654;
+        }
+    }
+}
+.user-item__team {
+    span {
+        font-weight: 500;
     }
 }

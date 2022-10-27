@@ -105,7 +105,9 @@ export default {
                 const statusGroupData = await axios.get(`/api/admin/stage/${id}/meta`);
                 statusGroup.value = statusGroupData.data;
                 status.value = payload;
-                resultComponent.value.update();
+                if(resultComponent.value) {
+                    resultComponent.value.update();
+                }
             } catch (e) {
                 console.log(e.message);
             }
@@ -136,6 +138,7 @@ export default {
                 await axios.patch(`/api/admin/stage/${id}/update`, {
                     title: title.value,
                     description: description.value,
+                    excerpt: excerpt.value,
                     register_start: register_start.value,
                     register_end: register_end.value,
                     race_start: race_start.value,
@@ -169,7 +172,7 @@ export default {
             submit, users, status,
             id, statusGroup, child,
             race_amount_drop, race_amount_group_drop, race_amount_fleet_drop,
-            statusGroupFetch, resultComponent
+            statusGroupFetch, resultComponent,
         }
     }
 }

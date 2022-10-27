@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('stages', function (Blueprint $table) {
             $table->id();
-            $table->integer('tournament_id')->unsigned();
+            $table->foreignId('tournament_id')->constrained()->onDelete('cascade');
             $table->dateTime('register_start');
             $table->dateTime('register_end');
             $table->dateTime('race_start');

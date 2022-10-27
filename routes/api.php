@@ -17,8 +17,17 @@ use Illuminate\Support\Facades\Route;
 
 //Route::get('/users', [\App\Http\Controllers\Admin\DashboardController::class, 'index']);
 
-Route::group(['middleware' => 'auth:sanctum'], function () {
+Route::group([/*'middleware' => 'auth:sanctum'*/], function () {
     Route::get('/users', [\App\Http\Controllers\User\DashboardController::class, 'index']);
+
+    Route::get('/settings', [\App\Http\Controllers\User\DashboardController::class, 'settings']);
+    Route::post('/team/store', [\App\Http\Controllers\User\TeamController::class, 'store']);
+    Route::get('/team/edit', [\App\Http\Controllers\User\TeamController::class, 'edit']);
+
+    Route::post('/user/search', [\App\Http\Controllers\User\UserController::class, 'search']);
+    Route::post('/team-invite', [\App\Http\Controllers\User\TeamInviteController::class, 'store']);
+    Route::delete('/team-invite/{id}/delete', [\App\Http\Controllers\User\TeamInviteController::class, 'destroy']);
+    Route::post('/team-invite/{id}/accept', [\App\Http\Controllers\User\TeamInviteController::class, 'accept']);
 });
 
 Route::group([/*'middleware' => ['auth:sanctum',  'admin' ]*/], function () {

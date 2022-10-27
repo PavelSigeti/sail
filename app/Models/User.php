@@ -44,6 +44,16 @@ class User extends Authenticatable
         return $this->belongsToMany(Race::class)->withTimestamps();;
     }
 
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
+    }
+
+    public function teamInvites()
+    {
+        return $this->belongsToMany(TeamInvite::class);
+    }
+
     /**
      * The attributes that should be cast.
      *

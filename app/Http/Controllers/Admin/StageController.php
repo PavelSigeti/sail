@@ -28,15 +28,11 @@ class StageController extends Controller
     }
 
     public function store(StageStoreRequest $request) {
-        $stage = Stage::query()->create([
-            'tournament_id' => $request->tournament_id,
-            'register_start' => $request->register_start,
-            'register_end' => $request->register_end,
-            'race_start' => $request->race_start,
-            'title' => $request->title,
-            'excerpt' => $request->excerpt,
-            'description' => $request->description,
-        ]);
+        $stage = Stage::query()->create($request->only([
+            'tournament_id', 'register_start', 'register_end',
+            'race_start', 'title', 'excerpt',
+            'description',
+        ]));
 
         return $stage;
     }
@@ -112,17 +108,11 @@ class StageController extends Controller
     {
         $stage = $this->stageRepository->getById($id);
 
-        $stage->update([
-            'register_start' => $request->register_start,
-            'register_end' => $request->register_end,
-            'race_start' => $request->race_start,
-            'title' => $request->title,
-            'excerpt' => $request->excerpt,
-            'description' => $request->description,
-            'race_amount_drop' => $request->race_amount_drop,
-            'race_amount_group_drop' => $request->race_amount_group_drop,
-            'race_amount_fleet_drop' => $request->race_amount_fleet_drop,
-        ]);
+        $stage->update($request->only([
+            'register_start', 'register_end', 'race_start',
+            'title', 'excerpt', 'description',
+            'race_amount_drop', 'race_amount_group_drop', 'race_amount_fleet_drop',
+        ]));
 
         return true;
     }
