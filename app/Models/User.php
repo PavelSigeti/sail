@@ -54,6 +54,11 @@ class User extends Authenticatable
         return $this->belongsToMany(TeamInvite::class);
     }
 
+    public function university()
+    {
+        return $this->belongsTo(University::class);
+    }
+
     /**
      * The attributes that should be cast.
      *

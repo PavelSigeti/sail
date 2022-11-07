@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Guest;
 
 use App\Http\Controllers\Controller;
 use App\Http\Repositories\UniversityRepository;
-use Illuminate\Http\Request;
 
 class RegistrationController extends Controller
 {

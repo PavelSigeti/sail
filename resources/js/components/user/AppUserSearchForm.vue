@@ -43,7 +43,6 @@ import axios from "axios";
 import {ref} from "vue";
 import {useStore} from "vuex";
 
-
 export default {
     name: "TheUserSearchForm",
     props: ['team_id',],
@@ -97,7 +96,7 @@ export default {
                     });
                 }
             } catch (e) {
-                console.log(e.response);
+                console.log(e.message);
                 store.dispatch('notification/displayMessage', {
                     value: e.response.data.message,
                     type: 'error',

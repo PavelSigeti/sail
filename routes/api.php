@@ -23,8 +23,10 @@ Route::group([/*'middleware' => 'auth:sanctum'*/], function () {
     Route::get('/settings', [\App\Http\Controllers\User\DashboardController::class, 'settings']);
     Route::post('/team/store', [\App\Http\Controllers\User\TeamController::class, 'store']);
     Route::get('/team/edit', [\App\Http\Controllers\User\TeamController::class, 'edit']);
+    Route::delete('/team/delete', [\App\Http\Controllers\User\TeamController::class, 'destroy']);
 
     Route::post('/user/search', [\App\Http\Controllers\User\UserController::class, 'search']);
+    Route::post('/user/remove-teammate', [\App\Http\Controllers\User\UserController::class, 'removeTeammate']);
     Route::post('/team-invite', [\App\Http\Controllers\User\TeamInviteController::class, 'store']);
     Route::delete('/team-invite/{id}/delete', [\App\Http\Controllers\User\TeamInviteController::class, 'destroy']);
     Route::post('/team-invite/{id}/accept', [\App\Http\Controllers\User\TeamInviteController::class, 'accept']);
@@ -63,6 +65,11 @@ Route::group([/*'middleware' => ['auth:sanctum',  'admin' ]*/], function () {
     Route::get('/admin/stage/{stageId}/{groupId}/{status}/total', [\App\Http\Controllers\Admin\StageController::class, 'getTotal']);
     Route::get('/admin/stage/{stageId}/{groupId}/{status}/total-detail', [\App\Http\Controllers\Admin\StageController::class, 'getTotalDetail']);
 
+    Route::get('/admin/universities', [\App\Http\Controllers\Admin\UniversityController::class, 'index']);
+    Route::post('/admin/universities/store', [\App\Http\Controllers\Admin\UniversityController::class, 'store']);
+    Route::delete('/admin/universities/{id}/delete', [\App\Http\Controllers\Admin\UniversityController::class, 'destroy']);
+
+    Route::get('/admin/pages', [\App\Http\Controllers\Admin\PageController::class, 'index']);
 });
 
 

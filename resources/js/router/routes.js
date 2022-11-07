@@ -86,6 +86,33 @@ export default [
         }
     },
     {
+        path: '/admin/settings',
+        name: 'admin.settings',
+        component: () => import('../views/admin/TheSettings.vue'),
+        meta: {
+            layout: 'Admin',
+            auth: true,
+        }
+    },
+    {
+        path: '/admin/pages',
+        name: 'admin.pages',
+        component: () => import('../views/admin/page/index.vue'),
+        meta: {
+            layout: 'Admin',
+            auth: true,
+        }
+    },
+    {
+        path: '/admin/pages/create',
+        name: 'admin.pages.create',
+        component: () => import('../views/admin/page/create.vue'),
+        meta: {
+            layout: 'Admin',
+            auth: true,
+        }
+    },
+    {
         path: '/settings',
         name: 'user.settings',
         component: () => import('../views/user/Settings.vue'),

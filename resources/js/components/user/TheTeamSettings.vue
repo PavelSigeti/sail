@@ -4,6 +4,32 @@
             <div class="info-container__key">Название:</div>
             <div class="info-container__value">{{team.name}}</div>
         </div>
+        <div class="info-container">
+            <h3>Состав команды</h3>
+            <div class="teammate-container">
+                <div class="user-item" v-for="(user, idx) in teammates" :key="user.id">
+                    <div class="user-item__content">
+                        <div class="user-item__nickname">
+                            {{user.nickname}}
+                            <span class="user-item__id">#{{user.id}}</span>
+                        </div>
+                        <div class="user-item__name">
+                            {{user.surname}} {{user.name}}
+                        </div>
+                    </div>
+                    <div class="user-item__icon" v-if="team.owner_id === user.id">
+                        <img src="@/static/crown.svg" alt="crown">
+                    </div>
+                    <div
+                        class="user-item__btn user-item__cancel-btn"
+                        v-if="owner && team.owner_id !== user.id"
+                        @click="removeTeammate(user.id, idx)"
+                    >
+                        <span>исключить</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <form v-else @submit.prevent="submit" class="form-control">
         <div class="form-control">
@@ -13,9 +39,9 @@
         <button>Создать команду</button>
     </form>
 
-    <AppUserSearchForm v-if="owner && teamInvites && teamInvites.length < 3 - teammates.length" :team_id="team.id" @invite="addInvite" />
+    <AppUserSearchForm v-if="owner && teamInvites && teammates && teamInvites.length < 3 - teammates.length" :team_id="team.id" @invite="addInvite" />
 
-    <div class="team-invites" v-if="teamInvites">
+    <div class="team-invites" v-if="teamInvites && teamInvites.length > 0">
         <h3>Отправленные приглашения</h3>
         <div
             class="user-item"
@@ -37,26 +63,11 @@
         </div>
     </div>
 
-    <div class="team-invites" v-if="invites && invites.length > 0">
-        <h3>Приглашения в команду</h3>
-        <div
-            class="user-item"
-            v-for="(invite, idx) in invites"
-            :key="invite.id"
-        >
-            <div class="user-item__content">
-                <div class="user-item__team">
-                    Команда: <span>{{invite.name}}</span>
-                </div>
-            </div>
-            <div class="user-item__btn user-item__accept-btn" @click="acceptInvite(invite.id)">
-                <span>принять</span>
-            </div>
-            <div class="user-item__btn user-item__cancel-btn" @click="rejectInvite(invite.id, idx)">
-                <span>откзаться</span>
-            </div>
-        </div>
-    </div>
+    <AppTeamInvite v-if="invites && invites.length > 0" :invites="invites" @update="getData" />
+
+    <button v-if="owner" @click="deleteTeam">Расформировать команду</button>
+
+    <button v-if="!owner && team" @click="removeTeammate(null, null)">Покинуть команду</button>
 
 </template>
 
@@ -64,12 +75,13 @@
 import {onMounted, ref} from "vue";
 import axios from "axios";
 import AppUserSearchForm from "./AppUserSearchForm.vue";
+import AppTeamInvite from "./AppTeamInvite.vue";
 import {useStore} from "vuex";
 
 export default {
     name: "TheTeamCreateForm",
     components: {
-        AppUserSearchForm,
+        AppUserSearchForm, AppTeamInvite,
     },
     setup() {
         const store = useStore();
@@ -97,7 +109,7 @@ export default {
 
         onMounted(async() => {
             await getData();
-            console.log(invites.value);
+            console.log(teammates.value);
         });
 
         const submit = async () => {
@@ -133,45 +145,49 @@ export default {
             console.log(teamInvites.value);
         };
 
-        const rejectInvite = async (id, idx) => {
+        const removeTeammate = async (id, idx) => {
             try {
-                await axios.delete(`/api/team-invite/${id}/delete`);
-                invites.value.splice(idx, 1);
+                await axios.post(`/api/user/remove-teammate`, {id});
+                if(id === null) {
+                    await getData();
+                } else {
+                    teammates.value.splice(idx, 1);
+                }
                 store.dispatch('notification/displayMessage', {
-                    value: 'Приглашение отклонено',
+                    value: 'Пользователь покинул команду',
                     type: 'primary',
                 });
             } catch (e) {
                 console.log(e.message);
                 store.dispatch('notification/displayMessage', {
-                    value: 'Ошибка при отклонении приглашения',
+                    value: e.response.data.message,
                     type: 'error',
                 });
             }
         };
-        const acceptInvite = async (id) => {
-            try {
-                await axios.post(`/api/team-invite/${id}/accept`);
-                invites.value = [];
-                store.dispatch('notification/displayMessage', {
-                    value: 'Вы вступили в команду',
-                    type: 'primary',
-                });
-                await getData();
-            } catch (e) {
-                console.log(e.message);
-                store.dispatch('notification/displayMessage', {
-                    value: 'Ошибка при вступлении в команду',
-                    type: 'error',
-                });
-            }
+
+        const deleteTeam = async () => {
+          try {
+              await axios.delete(`/api/team/delete`);
+              store.dispatch('notification/displayMessage', {
+                  value: 'Команда расформирована!',
+                  type: 'primary',
+              });
+              await getData();
+          }  catch (e) {
+              console.log(e.message);
+              store.dispatch('notification/displayMessage', {
+                  value: e.response.data.message,
+                  type: 'error',
+              });
+          }
         };
 
         return {
             name, team, submit,
             owner, addInvite, teamInvites,
             cancelInvite, teammates, invites,
-            rejectInvite, acceptInvite,
+            getData, removeTeammate, deleteTeam,
         }
     }
 }

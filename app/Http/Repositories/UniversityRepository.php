@@ -14,6 +14,27 @@ class UniversityRepository extends CoreRepository
 
     public function getAll()
     {
-        return $this->startConditions()->all();
+        return $this->startConditions()->get();
+    }
+
+    public function getById($id)
+    {
+        return $this->startConditions()->find($id);
+    }
+
+    public function getWithUserAmount()
+    {
+        $columns = [
+            'id', 'name',
+        ];
+
+        $result = $this->startConditions()
+            ->select($columns)
+            ->withCount(['users'])
+            ->orderBy('id')
+            ->get();
+            ;
+
+        return $result;
     }
 }

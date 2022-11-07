@@ -156,7 +156,7 @@ body {
     font-size: .9em;
     color: #555;
 }
-.user-item {
+.user-item, .item-block {
     display: flex;
     background-color: #eaf1ff;
     width: fit-content;
@@ -164,10 +164,20 @@ body {
     margin-bottom: 15px;
     overflow:hidden;
 }
-.user-item__content {
+.user-item__content, .item-block__content {
     padding: 15px;
 }
-.user-item__remove {
+.user-item__icon, .item-block__icon {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img {
+        width: 25px;
+        height: 25px;
+    }
+}
+.user-item__remove, .item-block__remove {
     width: 60px;
     display: flex;
     justify-content: center;
@@ -178,7 +188,7 @@ body {
         background-color: #ffd5d5;
     }
 }
-.user-item__btn {
+.user-item__btn, .item-block__btn {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -193,7 +203,7 @@ body {
         cursor: pointer;
     }
 }
-.user-item__cancel-btn {
+.user-item__cancel-btn, .item-block__cancel-btn {
     span {
         background-color: #f33c3c;
         &:hover {
@@ -201,7 +211,7 @@ body {
         }
     }
 }
-.user-item__accept-btn {
+.user-item__accept-btn, .item-block__accept-btn {
     span {
         background-color: #36d567;
         &:hover {
@@ -209,8 +219,14 @@ body {
         }
     }
 }
-.user-item__team {
+.user-item__team{
     span {
         font-weight: 500;
+    }
+}
+.teammate-container {
+    display: flex;
+    .user-item {
+        margin-right: 15px;
     }
 }
