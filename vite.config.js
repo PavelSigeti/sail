@@ -17,6 +17,7 @@ export default defineConfig({
     resolve: {
         alias: {
             '~bootstrap': path.resolve(__dirname, 'node_modules/bootstrap/dist/css/bootstrap-grid.css'),
+            '~reset-css': path.resolve(__dirname, 'node_modules/reset-css/reset.css'),
         }
     },
 });

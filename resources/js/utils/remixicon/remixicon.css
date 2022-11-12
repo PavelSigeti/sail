@@ -8,12 +8,12 @@
 
 @font-face {
     font-family: "remixicon";
-    src: url('remixicon.eot?t=1668009543625'); /* IE9*/
-    src: url('remixicon.eot?t=1668009543625#iefix') format('embedded-opentype'), /* IE6-IE8 */
-    url("remixicon.woff2?t=1668009543625") format("woff2"),
-    url("remixicon.woff?t=1668009543625") format("woff"),
-    url('remixicon.ttf?t=1668009543625') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-    url('remixicon.svg?t=1668009543625#remixicon') format('svg'); /* iOS 4.1- */
+    src: url('remixicon.eot?t=1668281708494'); /* IE9*/
+    src: url('remixicon.eot?t=1668281708494#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url("remixicon.woff2?t=1668281708494") format("woff2"),
+    url("remixicon.woff?t=1668281708494") format("woff"),
+    url('remixicon.ttf?t=1668281708494') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+    url('remixicon.svg?t=1668281708494#remixicon') format('svg'); /* iOS 4.1- */
     font-display: swap;
 }
 
@@ -69,3 +69,11 @@
 .ri-table-fill:before { content: "\f1dd"; }
 .ri-layout-left-2-fill:before { content: "\ee91"; }
 .ri-delete-bin-2-line:before { content: "\ec1e"; }
+.ri-sailboat-line:before { content: "\f0ad"; }
+.ri-trophy-line:before { content: "\f22f"; }
+.ri-team-line:before { content: "\f1ee"; }
+.ri-file-line:before { content: "\eceb"; }
+.ri-information-line:before { content: "\ee59"; }
+.ri-function-line:before { content: "\ed9e"; }
+.ri-settings-2-fill:before { content: "\f0e3"; }
+.ri-arrow-left-s-line:before { content: "\ea64"; }

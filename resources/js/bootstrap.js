@@ -3,6 +3,7 @@ window._ = _;
 
 import store from './store/index.js';
 import router from './router/index.js';
+import {ProgressFinisher, useProgress} from '@marcoschulte/vue3-progress';
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -29,6 +30,21 @@ window.axios.interceptors.response.use(null, async (error) => {
     }
 
     return Promise.reject(error)
+});
+
+const progresses = [];
+
+window.axios.interceptors.request.use(config => {
+    progresses.push(useProgress().start());
+    return config;
+});
+
+window.axios.interceptors.response.use(resp => {
+    progresses.pop()?.finish();
+    return resp;
+}, (error) => {
+    progresses.pop()?.finish();
+    return Promise.reject(error);
 });
 
 

@@ -8,6 +8,10 @@ export default {
     state() {
         return {
             token: localStorage.getItem(TOKEN_KEY),
+            nickname: '',
+            id: '',
+            name: '',
+            surname: '',
         }
     },
     mutations: {
@@ -19,7 +23,8 @@ export default {
             state.token = null;
             localStorage.removeItem(TOKEN_KEY);
             await axios.get('/sanctum/csrf-cookie');
-        }
+        },
+
     },
     actions: {
         async login({ commit, dispatch }, payload) {
@@ -30,6 +35,7 @@ export default {
                     email: payload.email,
                     password: payload.password,
                 });
+                console.log('login data',data);
                 localStorage.setItem('x_xsrf_token', data.config.headers['X-XSRF-TOKEN']);
                 commit('setToken', data.config.headers['X-XSRF-TOKEN']);
                 router.push({name: 'Dashboard',});
@@ -46,7 +52,7 @@ export default {
             // try{
                 await axios.post('/logout');
                 localStorage.removeItem('x_xsrf_token');
-                router.push('/login');
+                router.push('/');
                 commit('logout');
             // } catch (e) {
             //     console.log(e.message);

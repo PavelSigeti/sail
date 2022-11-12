@@ -12,6 +12,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        sleep(2);
         return User::all();
     }
 

@@ -2,6 +2,7 @@
     <div class="modal">
         <div class="modal-background" @click="$emit('close');"></div>
         <div class="modal-container">
+            <AppLoader v-if="loading" />
             <h2>Регистрация</h2>
             <TheRegisterFormWizard :validation-schema="schema" @submitForm="register" @switchReg="switchToLogIn" />
         </div>
@@ -14,16 +15,20 @@ import axios from "axios";
 import * as yup from "yup";
 import TheRegisterFormWizard from "./TheRegisterFormWizard.vue";
 import {useStore} from "vuex";
+import AppLoader from "../ui/AppLoader.vue";
 
 export default {
     name: "AppRegisterForm",
     emits: ['close', 'switchReg'],
     components: {
-        TheRegisterFormWizard,
+        TheRegisterFormWizard, AppLoader,
     },
     setup(_, {emit}) {
         const step = ref(0);
         const store = useStore();
+
+        const loading = ref(false);
+
         const schema = [
             yup.object({
                 email: yup.string().required('Введите E-mail').email('Не корректный E-mail'),
@@ -42,6 +47,7 @@ export default {
         ];
         const register = async (data) => {
             try {
+                loading.value = true;
                 await axios.get('/sanctum/csrf-cookie');
                 data.university_id = data.university_id ? data.university_id.code : null;
                 await axios.post('/register', data);
@@ -52,9 +58,10 @@ export default {
             } catch (e) {
                 console.log(e.message);
                 store.dispatch('notification/displayMessage', {
-                    value: 'Ошибка! Попробуйте обновить страницу',
+                    value: 'Ошибка! Попробуйте ввести другие данные или обновить страницу',
                     type: 'error',
                 });
+                loading.value = false;
             }
         };
 
@@ -62,7 +69,7 @@ export default {
             emit('switchReg');
         };
         return {
-            register, step,
+            register, step, loading,
             schema, switchToLogIn
         };
     }

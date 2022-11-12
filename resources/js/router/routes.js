@@ -14,22 +14,6 @@ export default [
         component: () => import('../views/Dashboard.vue'),
         meta: {
             auth: true,
-            layout: 'Dashboard',
-        }
-    },
-    {
-        path: '/login',
-        name: 'Login',
-        component: () => import('../views/Login.vue'),
-        meta: {
-            layout: 'Auth',
-        }
-    },
-    {
-        path: '/registration',
-        name: 'Register',
-        component: () => import('../views/Register.vue'),
-        meta: {
             layout: 'Auth',
         }
     },

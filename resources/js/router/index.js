@@ -17,16 +17,19 @@ router.beforeEach((to, from, next) => {
 
     const redirectRoutes = ['Reset-password', 'Login', 'Reset', 'Register', ];
 
-   if(redirectRoutes.includes(to.name) && token) {
+    if(redirectRoutes.includes(to.name) && token) {
         store.dispatch('auth/logout');
+    }
+    else if(token && to.name === 'Home') {
+        next({name: 'Dashboard'});
     }
     else if(requireAuth && token) {
         next();
     } else if (requireAuth && !token) {
-        next({name: 'Login',});
+        next({name: 'Home',});
     } else {
         next();
-    }
+}
 });
 
 

@@ -1,3 +1,4 @@
+@import '~reset-css';
 @import '~bootstrap';
 @import './app-media.scss';
 
@@ -31,6 +32,7 @@ body {
     padding-top: 30px;
     font-size: 16px;
     color: #242424;
+    font-family: 'Jost';
 }
 * {
     font-family: 'Jost';
@@ -91,8 +93,8 @@ h2 {
     align-items: center;
     background-color: rgba(255, 255, 255, .75);
     overflow-y: auto;
-    padding-top: 30px;
-    padding-bottom: 30px;
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
 .modal-background {
     position: fixed;
@@ -114,6 +116,8 @@ h2 {
     padding: 30px;
     margin-top: auto;
     margin-bottom: auto;
+    position: relative;
+    overflow: hidden;
 }
 .home-form {
     width: 100%;
@@ -188,10 +192,59 @@ h2 {
         opacity: .8;
     }
 }
+.container-1890 {
+    max-width: 1890px;
+}
+.menu-item {
+    flex-direction: row;
+    height: 50px;
+    transition: .3s;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    a {
+        text-decoration: none;
+        color: #242424;
+        display: flex;
+        align-items: center;
+    }
+    span {
+        font-size: 1.2em;
+    }
+    i {
+        font-size: 2em;
+        color: #333;
+        margin-right: 15px;
+    }
+    &:hover {
+        background-color: $grey;
+    }
+}
+.user-icon {
+    width: 70px;
+    height: 70px;
+    overflow: hidden;
+    border-radius: 50px;
+    box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, .1);
+    img {
+        width: 70px;
+        height: 70px;
+    }
+}
 
 
 
 
+
+
+
+
+
+.vld-container {
+    z-index: 1000;
+}
 .jcc {
     display: flex;
     justify-content: center;
@@ -277,4 +330,19 @@ h2 {
         top: 0;
         left: 0;
     }
+}
+body .vue3-progress-bar-container .vue3-progress-bar {
+    background-color: #242424;
+}
+.loading-overlay {
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255,255,255, .5);
+    z-index: 300;
 }

@@ -189,7 +189,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-    @import '@/utils/remixicon.css';
+    @import '@/utils/remixicon/remixicon.css';
 
     .tiptap {
         border: 3px solid #242424;

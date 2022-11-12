@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 //Route::get('/users', [\App\Http\Controllers\Admin\DashboardController::class, 'index']);
 
-Route::group([/*'middleware' => 'auth:sanctum'*/], function () {
+Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/users', [\App\Http\Controllers\User\DashboardController::class, 'index']);
 
     Route::get('/settings', [\App\Http\Controllers\User\DashboardController::class, 'settings']);
