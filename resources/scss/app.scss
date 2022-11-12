@@ -27,15 +27,20 @@ $grey: #EEEEEE;
     font-weight: 700;
 }
 
+a {
+    text-decoration: none;
+}
 body {
     background-color: #F8F8FA;
-    padding-top: 30px;
     font-size: 16px;
     color: #242424;
     font-family: 'Jost';
 }
 * {
     font-family: 'Jost';
+}
+header {
+    margin-top: 30px;
 }
 .logo {
     width: 140px;
@@ -55,7 +60,7 @@ body {
     }
 }
 .btn-border {
-    outline: 3px solid $dark;
+    box-shadow:inset 0px 0px 0px 2px $dark;
     font-size: 1em;
     font-weight: 600;
 }
@@ -194,6 +199,7 @@ h2 {
 }
 .container-1890 {
     max-width: 1890px;
+    width: auto;
 }
 .menu-item {
     flex-direction: row;
@@ -205,7 +211,6 @@ h2 {
     border-radius: 10px;
     cursor: pointer;
     a {
-        text-decoration: none;
         color: #242424;
         display: flex;
         align-items: center;
@@ -233,10 +238,55 @@ h2 {
         height: 70px;
     }
 }
-
-
-
-
+.user {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.user__container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.user-nick {
+    font-weight: 500;
+    font-size: 1.2em;
+}
+.user-id {
+    font-size: .9rem;
+    color: #555;
+}
+.user-name {
+    font-size: .9em;
+    color: #555;
+}
+.user-icon {
+    margin-right: 20px;
+}
+.user-settings {
+    font-size: 1.2em;
+    cursor: pointer;
+    a {
+        color: #bbb;
+        transition: .3s;
+        &:hover {
+            color: #555;
+        }
+    }
+}
+.sidebar {
+    left: 0;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    max-width: calc(100% / 6 - var(--bs-gutter-x)) ;
+    padding-right: calc(var(--bs-gutter-x) * 0.5);
+    padding-left: calc(var(--bs-gutter-x) * 0.5);
+    border-right: 1px solid #ccc;
+}
 
 
 

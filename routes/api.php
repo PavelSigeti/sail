@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-//Route::get('/users', [\App\Http\Controllers\Admin\DashboardController::class, 'index']);
+Route::post('login', [\App\Http\Controllers\AuthController::class, 'login']);
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/users', [\App\Http\Controllers\User\DashboardController::class, 'index']);

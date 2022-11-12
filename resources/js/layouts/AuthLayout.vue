@@ -3,8 +3,10 @@
     <div class="container-fluid container-1890">
         <div class="row">
             <div class="col-xl-2">
-                <AppUser />
-                <the-navbar></the-navbar>
+                <div class="sidebar">
+                    <AppUser />
+                    <the-navbar></the-navbar>
+                </div>
             </div>
             <div class="col-xl-10">
                 <router-view></router-view>
