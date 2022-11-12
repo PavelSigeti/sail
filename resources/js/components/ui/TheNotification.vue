@@ -1,13 +1,24 @@
 <template>
-    <div class="notification">
-        <slot />
+    <div :class="['notification ',`notification-${data.type}`]">
+        {{data.message}}
         <div class="notification-progress"></div>
     </div>
 </template>
 
 <script>
+import { ref } from 'vue';
+
 export default {
     name: "TheNotification",
+    props: ['payload'],
+    setup(props) {
+        const data = ref();
+        data.value = props.payload;
+
+        return {
+            data
+        }
+    }
 }
 </script>
 

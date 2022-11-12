@@ -22,7 +22,7 @@ export default {
         }
     },
     actions: {
-        async login({ commit }, payload) {
+        async login({ commit, dispatch }, payload) {
 
             try {
                 await axios.get('/sanctum/csrf-cookie');
@@ -34,7 +34,10 @@ export default {
                 commit('setToken', data.config.headers['X-XSRF-TOKEN']);
                 router.push({name: 'Dashboard',});
             } catch(e) {
-                console.log(e.message);
+                dispatch('notification/displayMessage', {
+                    value: 'E-mail или пароль не верны',
+                    type: 'error',
+                }, {root:true});
             }
 
 

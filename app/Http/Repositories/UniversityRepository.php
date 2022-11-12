@@ -17,6 +17,15 @@ class UniversityRepository extends CoreRepository
         return $this->startConditions()->get();
     }
 
+    public function getAllForReg()
+    {
+        $result = $this->startConditions()
+            ->select(['id as code', 'name as label'])
+            ->orderBy('code')
+            ->get();
+        return $result;
+    }
+
     public function getById($id)
     {
         return $this->startConditions()->find($id);

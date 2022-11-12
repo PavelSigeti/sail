@@ -1,5 +1,5 @@
 <template>
-    <TheNotification @click="close" v-if="message">{{message}}</TheNotification>
+    <TheNotification v-if="message" :payload="{message, type}"></TheNotification>
     <TheAdminNavbar />
     <router-view></router-view>
 </template>
@@ -18,13 +18,11 @@ export default {
     setup() {
         const store = useStore();
 
-        const close = () => {
-            store.dispatch('notification/clearMessage');
-        }
         const message = computed(() => store.getters['notification/message']);
+        const type = computed(() => store.getters['notification/type']);
 
         return {
-            close, message
+            message, type,
         }
     }
 }

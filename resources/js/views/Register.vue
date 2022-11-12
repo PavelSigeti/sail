@@ -59,15 +59,16 @@ export default {
         const register = async () => {
             try {
                 await axios.get('/sanctum/csrf-cookie');
-                await axios.post('/register',{
-                    name: name.value,
-                    email: email.value,
-                    surname: surname.value,
-                    nickname: nickname.value,
-                    password: password.value,
-                    password_confirmation: password_confirmation.value,
-                    university_id: +university_id.value,
-                });
+                await axios.post('/register',test);
+                // await axios.post('/register',{
+                //     name: name.value,
+                //     email: email.value,
+                //     surname: surname.value,
+                //     nickname: nickname.value,
+                //     password: password.value,
+                //     password_confirmation: password_confirmation.value,
+                //     university_id: +university_id.value,
+                // });
                 store.dispatch('auth/login', {
                     email: email.value,
                     password: password.value,

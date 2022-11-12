@@ -113,6 +113,15 @@ export default [
         }
     },
     {
+        path: '/admin/page/:id',
+        name: 'admin.pages.edit',
+        component: () => import('../views/admin/page/edit.vue'),
+        meta: {
+            layout: 'Admin',
+            auth: true,
+        }
+    },
+    {
         path: '/settings',
         name: 'user.settings',
         component: () => import('../views/user/Settings.vue'),

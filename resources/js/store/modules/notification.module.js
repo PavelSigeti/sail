@@ -13,10 +13,12 @@ export default {
         },
         clearMessage(state) {
             state.message = null;
+            state.type = null;
         }
     },
     actions: {
         displayMessage({ commit }, payload) {
+            commit('clearMessage');
             commit('setMessage', payload);
             setTimeout(() => {
                 commit('clearMessage');

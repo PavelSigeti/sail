@@ -12,6 +12,11 @@ class PageRepository extends CoreRepository
         return Model::class;
     }
 
+    public function getById($id)
+    {
+        return $this->startConditions()->find($id);
+    }
+
     public function getAll()
     {
         $columns = [

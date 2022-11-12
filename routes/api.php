@@ -70,6 +70,9 @@ Route::group([/*'middleware' => ['auth:sanctum',  'admin' ]*/], function () {
     Route::delete('/admin/universities/{id}/delete', [\App\Http\Controllers\Admin\UniversityController::class, 'destroy']);
 
     Route::get('/admin/pages', [\App\Http\Controllers\Admin\PageController::class, 'index']);
+    Route::post('/admin/page/store', [\App\Http\Controllers\Admin\PageController::class, 'store']);
+    Route::get('/admin/page/{id}', [\App\Http\Controllers\Admin\PageController::class, 'edit']);
+    Route::patch('/admin/page/{id}/update', [\App\Http\Controllers\Admin\PageController::class, 'update']);
 });
 
 
