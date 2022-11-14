@@ -57,6 +57,8 @@ class TeamController extends Controller
             'team_id' => $team->id,
         ]);
 
+        $this->teamInviteRepository->deleteUsersInvites($user->id);
+
         return $team;
     }
 

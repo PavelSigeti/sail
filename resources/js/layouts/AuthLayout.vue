@@ -1,11 +1,16 @@
 <template>
-    <TheNotification @click="close" v-if="message">{{message}}</TheNotification>
+    <TheNotification v-if="message" :payload="{message, type}"></TheNotification>
     <div class="container-fluid container-1890">
         <div class="row">
-            <div class="col-xl-2">
+            <div class="col-xl-2 sidebar__container">
                 <div class="sidebar">
-                    <AppUser />
-                    <the-navbar></the-navbar>
+                    <div class="sidebar-main">
+                        <AppUser />
+                        <the-navbar></the-navbar>
+                    </div>
+                    <div class="sidebar-bottom">
+                        <div class="menu-item menu-item__exit" @click="logout"><a @click.prevent="logout" href="#"><img src="@/static/exit.svg" alt=""><span>Выйти</span></a></div>
+                    </div>
                 </div>
             </div>
             <div class="col-xl-10">
@@ -34,9 +39,15 @@ export default {
             store.dispatch('notification/clearMessage');
         }
         const message = computed(() => store.getters['notification/message']);
+        const type = computed(() => store.getters['notification/type']);
+
+        const logout = () => {
+            store.dispatch('auth/logout');
+        };
 
         return {
-            close, message
+            close, message, logout,
+            type,
         }
     }
 }

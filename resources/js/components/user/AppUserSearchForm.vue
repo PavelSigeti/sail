@@ -1,9 +1,20 @@
 <template>
-    <form class="invite-form" @submit.prevent="invite" >
-        <div class="form-info">Вы можете приглосить пользователей, которые не состоят в команде</div>
-        <div class="form-control" v-if="!selected">
-            <label for="user"></label>
-            <input type="text" id="user" v-model="user" @input="search">
+    <form class="invite-form" >
+        <div class="user-item" v-if="!selected">
+            <div class="user-item__content">
+                <input
+                    class="form-input__user-search"
+                    type="text"
+                    id="user"
+                    v-model="user"
+                    @input="search"
+                    placeholder="Найти пользователя"
+                    autocomplete="off"
+                >
+            </div>
+            <div class="user-item__btn">
+                <div class="btn btn-default btn-team">Найти</div>
+            </div>
         </div>
         <div class="user-item" v-else>
             <div class="user-item__content">
@@ -14,13 +25,13 @@
                 <div class="user-item__name">
                     {{selected.surname}} {{selected.name}}
                 </div>
+                <div class="user-item__cancel" @click="selected = null">Убрать</div>
             </div>
-            <div class="user-item__remove" @click="selected = null">
-                <img src="@/static/trash.svg" alt="trash">
+            <div class="user-item__invite" @click="selected = null">
+                <button @click.prevent="invite" class="btn btn-default btn-team">Пригласить</button>
             </div>
         </div>
-        <button>Пригласить пользователя</button>
-        <div class="search-container" v-if="searchCandidates">
+        <div class="search-container" v-if="searchCandidates && user.length > 0">
             <div class="search-candidate"
                  v-for="user in searchCandidates"
                  :key="user.id"
@@ -46,7 +57,7 @@ import {useStore} from "vuex";
 export default {
     name: "TheUserSearchForm",
     props: ['team_id',],
-    emits: ['invite'],
+    emits: ['invite', 'load'],
     setup(props, {emit}) {
         const store = useStore();
 
@@ -77,6 +88,7 @@ export default {
 
         const invite = async () => {
             try {
+                emit('load');
                 if(selected.value) {
                     const response = await axios.post('/api/team-invite', {
                         team_id: props.team_id,
@@ -88,12 +100,14 @@ export default {
                         type: 'primary',
                     });
                     emit('invite', response.data);
+                    emit('load');
                 }
                 else {
                     store.dispatch('notification/displayMessage', {
                         value: 'Выберите пользователя',
                         type: 'error',
                     });
+                    emit('load');
                 }
             } catch (e) {
                 console.log(e.message);
@@ -101,6 +115,7 @@ export default {
                     value: e.response.data.message,
                     type: 'error',
                 });
+                emit('load');
             }
         };
 

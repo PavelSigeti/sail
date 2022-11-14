@@ -6,28 +6,32 @@
         <li class="menu-item"><router-link to="/dashboard"><i class="ri-team-line"></i><span>Команды</span></router-link></li>
         <li class="menu-item"><router-link to="/dashboard"><i class="ri-file-line"></i><span>Регламент</span></router-link></li>
         <li class="menu-item"><router-link to="/dashboard"><i class="ri-information-line"></i><span>О проекте</span></router-link></li>
-        <li v-if="auth" class="menu-item menu-item__exit"><a @click.prevent="logout" href="#">Logout</a></li>
     </ul>
+    <TheAdminNavbar />
+
 </template>
 
 <script>
 import { useStore } from 'vuex';
-import {computed} from "vue";
 import '@/utils/remixicon/remixicon.css';
+import TheAdminNavbar from '@/components/admin/TheAdminNavbar.vue';
 
 export default {
     name: "TheNavbar",
+    components: {
+        TheAdminNavbar,
+    },
     setup() {
         const store = useStore();
 
-        const auth = computed(() => store.getters['auth/isAuthenticated']);
+        const admin = store.getters['auth/user'].role === 'admin';
 
         const logout = () => {
             store.dispatch('auth/logout');
         };
 
         return {
-            logout, auth,
+            logout, admin,
         }
     }
 }

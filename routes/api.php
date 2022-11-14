@@ -18,8 +18,6 @@ use Illuminate\Support\Facades\Route;
 Route::post('login', [\App\Http\Controllers\AuthController::class, 'login']);
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
-    Route::get('/users', [\App\Http\Controllers\User\DashboardController::class, 'index']);
-
     Route::get('/settings', [\App\Http\Controllers\User\DashboardController::class, 'settings']);
     Route::post('/team/store', [\App\Http\Controllers\User\TeamController::class, 'store']);
     Route::get('/team/edit', [\App\Http\Controllers\User\TeamController::class, 'edit']);

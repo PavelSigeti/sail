@@ -1,19 +1,40 @@
 <template>
-    <form @submit.prevent="submit">
-        <div class="form-control">
-            <label for="title">Название серии</label>
-            <input type="text" id="title" v-model="title">
+    <header class="dashboard-header">
+        <h1>Серии</h1>
+        <div class="header-content">
+            <div class="btn btn-border support-btn">Обратная связь</div>
+            <div class="header-notification">
+                <span class="header-notification__counter">1</span>
+                <i class="ri-notification-2-fill"></i>
+            </div>
         </div>
-        <div class="form-control">
-            <label for="yacht">Тип лодки</label>
-            <input type="text" id="yacht" v-model="yacht">
+    </header>
+    <main>
+        <div class="container-fluid g-0">
+            <div class="row">
+                <div class="col-12">
+                    <div class="dashboard-item">
+                        <h3>Добавить серию</h3>
+                        <form @submit.prevent="submit">
+                            <div class="form-control">
+                                <label for="title">Название серии</label>
+                                <input class="form-input" type="text" id="title" v-model="title" placeholder="Название серии">
+                            </div>
+                            <div class="form-control">
+                                <label for="yacht">Тип лодки</label>
+                                <input class="form-input" type="text" id="yacht" v-model="yacht" placeholder="Тип лодки">
+                            </div>
+                            <div class="form-control">
+                                <label for="description">Описание</label>
+                                <textarea id="description" cols="30" rows="10" v-model="description"></textarea>
+                            </div>
+                            <button class="btn btn-default btn-settings">Создать</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="form-control">
-            <label for="description">Описание</label>
-            <textarea id="description" cols="30" rows="10" v-model="description"></textarea>
-        </div>
-        <button :disabled="loading">Создать</button>
-    </form>
+    </main>
 
     <h2>Список серий</h2>
     <div class="block-container">

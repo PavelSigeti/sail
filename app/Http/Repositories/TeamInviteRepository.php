@@ -48,4 +48,15 @@ class TeamInviteRepository extends CoreRepository
 
         return $result;
     }
+    public function deleteUsersInvites($id) {
+        return $this->startConditions()
+            ->where('user_id', $id)
+            ->delete();
+    }
+    public function countUsersInvites($id) {
+        return $this->startConditions()
+            ->where('user_id', $id)
+            ->count();
+    }
+
 }

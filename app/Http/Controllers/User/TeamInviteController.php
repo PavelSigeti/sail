@@ -29,6 +29,10 @@ class TeamInviteController extends Controller
         if($check > 0) {
             return abort(400, 'Вы уже пригласили этого пользователя');
         }
+        $countInvites = $this->teamInviteRepository->countUsersInvites($request->user_id);
+        if($countInvites >= 5) {
+            return abort(400, 'Пользователя пригласили уже более пяти команд. Попросите его откланить приглашения');
+        }
         if($user->id === $team->owner_id && count($team->users) < 3 && $userRequest->team_id === null){
             $teamInvite = TeamInvite::query()->create($request->only(['user_id', 'team_id']));
             $response = $userRequest->only(['name', 'surname', 'nickname']);

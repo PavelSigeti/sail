@@ -47,6 +47,7 @@ header {
     height: auto;
 }
 .btn {
+    background-color: rgba(255, 255, 255, 0);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -69,6 +70,9 @@ header {
     color: #fff;
     font-size: 1em;
     font-weight: 500;
+}
+.btn-settings {
+    padding: 12px 24px;
 }
 .login-btn {
     height: 50px;
@@ -207,9 +211,10 @@ h2 {
     transition: .3s;
     display: flex;
     align-items: center;
-    padding: 0 15px;
+    padding: 0 10px;
     border-radius: 10px;
     cursor: pointer;
+    margin-right: 10px;
     a {
         color: #242424;
         display: flex;
@@ -243,7 +248,6 @@ h2 {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    margin-top: 30px;
     margin-bottom: 30px;
 }
 .user__container {
@@ -269,6 +273,7 @@ h2 {
 .user-settings {
     font-size: 1.2em;
     cursor: pointer;
+    margin-right: 10px;
     a {
         color: #bbb;
         transition: .3s;
@@ -277,18 +282,247 @@ h2 {
         }
     }
 }
+.sidebar__container {
+    position: relative;
+    border-right: 1px solid #ddd;
+    padding-top: 30px;
+}
 .sidebar {
-    left: 0;
-    position: fixed;
-    height: 100%;
+    top: 30px;
+    position: sticky;
+    height: calc(100vh - 30px);
     width: 100%;
-    max-width: calc(100% / 6 - var(--bs-gutter-x)) ;
     padding-right: calc(var(--bs-gutter-x) * 0.5);
     padding-left: calc(var(--bs-gutter-x) * 0.5);
-    border-right: 1px solid #ccc;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
-
-
+.sidebar-bottom {
+    width: 100%;
+    position: relative;
+}
+.menu-item__exit {
+    margin-bottom: 15px;
+    img {
+        width: 32px;
+        height: 32px;
+        margin-right: 15px;
+    }
+}
+h1 {
+    font-size: 2.25em;
+    font-weight: 600;
+    color: #242424;
+}
+.dashboard-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+.header-content {
+    display: flex;
+    align-items: center;
+}
+.header-notification {
+    height: 50px;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow:inset 0px 0px 0px 2px #ccc;
+    border-radius: 30px;
+    position: relative;
+    margin-left: 35px;
+    transition: .3s;
+    cursor: pointer;
+    i {
+        color: #777;
+        font-size: 1.5em;
+    }
+    &:hover {
+        box-shadow:inset 0px 0px 0px 2px #555;
+    }
+}
+.header-notification__counter {
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    background-color: #242424;
+    left: -12px;
+    border-radius: 20px;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: .9em;
+    font-weight: 500;
+}
+.support-btn {
+    height: 50px;
+    width: 150px;
+    font-size: .95em;
+}
+.dashboard-item {
+    background-color: #FDFDFD;
+    box-shadow: 0px 0px 40px -5px rgba(0, 0, 0, .1);
+    padding: 30px;
+    border-radius: 10px;
+    position: relative;
+    margin-bottom: 30px;
+    h3 {
+        font-size: 1.4em;
+        font-weight: 500;
+        margin-bottom: 20px;
+    }
+    p {
+        font-size: 1.1em;
+        margin-bottom: 15px;
+    }
+    label {
+        margin-bottom: 10px;
+        font-size: 1.1em;
+    }
+}
+.btn-full-width {
+    width: 100%;
+    height: 55px;
+}
+.teammate-container {
+    display: flex;
+    flex-direction: column;
+}
+.user-item {
+    background-color: #eee;
+    border-radius: 10px;
+    height: 90px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 0px 15px;
+}
+.user-item__icon {
+    height: 32px;
+    width: 32px;
+}
+.user-item__nickname {
+    font-size: 1.2em;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+.user-item__id {
+    font-size: .9rem;
+    color: #555;
+}
+.user-item__name {
+    color: #555;
+}
+.user-item__content {
+    width: 100%;
+    margin-right: 15px;
+    position: relative;
+}
+.user-item__btn {
+    width: 110px;
+    flex-shrink: 0;
+}
+.form-input__user-search {
+    height: 60px;
+    outline: none;
+    border: 0;
+    background-color: #ededed;
+    font-size: 1.1em;
+    width: 100%;
+}
+.btn-team {
+    height: 36px;
+    width: 110px;
+}
+.search-container {
+    position: absolute;
+    background-color: #FDFDFD;
+    width: calc(100% - 80px);
+    box-shadow: 0px 0px 40px -5px rgba(0, 0, 0, .1);
+    border-radius: 10px;
+    padding: 10px;
+    overflow-y: auto;
+    height: fit-content;
+    max-height: 280px;
+    z-index: 100;
+}
+.search-candidate {
+    background-color: #ededed;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    transition: .3s;
+    &:hover {
+        box-shadow:inset 0px 0px 0px 2px #242424;
+    }
+}
+.search-candidate__nickname {
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+.search-candidate__id {
+    font-size: .9rem;
+    color: #555;
+}
+.user-item__cancel {
+    background-color: #eeeeeecc;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 1.2em;
+    opacity: 0;
+    transition: .3s;
+}
+.user-item__content {
+    &:hover {
+        .user-item__cancel {
+            opacity: 1;
+        }
+    }
+}
+.team-invite__item {
+    background-color: #EBEBEB;
+    padding: 15px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+}
+.team-invite__buttons {
+    display: flex;
+    flex-direction: row;
+    .btn-default {
+        margin-right: 15px;
+    }
+}
+.team-invites {
+    margin-top: 15px;
+    .team-invite__item:last-child {
+        margin-bottom: 0;
+    }
+}
+.team-invite__item-name {
+    font-size: 1.1em;
+    margin-bottom: 15px;
+}
+.menu-admin {
+    margin-top: 30px;
+}
 
 
 
@@ -375,7 +609,7 @@ h2 {
         content: '';
         width: 5px;
         height: 100%;
-        background-color: #5bff5e;
+        background-color: #36d567;
         position: absolute;
         top: 0;
         left: 0;
@@ -395,4 +629,7 @@ body .vue3-progress-bar-container .vue3-progress-bar {
     align-items: center;
     background-color: rgba(255,255,255, .5);
     z-index: 300;
+}
+.b500 {
+    font-weight: 500;
 }

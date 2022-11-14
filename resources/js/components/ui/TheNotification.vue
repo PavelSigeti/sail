@@ -12,8 +12,7 @@ export default {
     name: "TheNotification",
     props: ['payload'],
     setup(props) {
-        const data = ref();
-        data.value = props.payload;
+        const data = ref(props.payload);
 
         return {
             data
