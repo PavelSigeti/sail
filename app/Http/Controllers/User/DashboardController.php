@@ -15,7 +15,7 @@ class DashboardController extends Controller
         return User::all();
     }
 
-    public function settings()
+    public function invites()
     {
         $user = Auth::user();
         $invites = null;

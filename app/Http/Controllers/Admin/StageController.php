@@ -55,7 +55,9 @@ class StageController extends Controller
     public function startStage($id, StageStartAction $action)
     {
         $stage = $this->stageRepository->getByIdWithRaces($id);
-
+        if($stage->status !== 'active') {
+            abort(400, 'Этап уже начался, обновите страницу');
+        }
         return $action($stage);
     }
 
@@ -64,25 +66,32 @@ class StageController extends Controller
 
         $stage = $this->stageRepository->getById($id);
         $status = $stage->status;
-        $groups = $this->raceRepository->getStageStatusGroup($id)[$status];
 
-        $drops = $this->stageRepository->getStageDrops($id, $status);
+        if($status === 'fleet' || $status === 'default') {
+            $groups = $this->raceRepository->getStageStatusGroup($id)[$status];
+            $drops = $this->stageRepository->getStageDrops($id, $status);
+            $groupsResult = [];
 
-        $groupsResult = [];
+            foreach($groups as $groupId) {
+                $result = $this->userRepository->getGroupData($id, $groupId, $status);
+                $groupsResult = array_merge($groupsResult, $sortAction($result, $drops)->toArray());
+            }
 
-        foreach($groups as $groupId) {
-            $result = $this->userRepository->getGroupData($id, $groupId, $status);
-            $groupsResult = array_merge($groupsResult, $sortAction($result, $drops)->toArray());
+            return $finishStage($stage, $groupsResult);
         }
 
-
-        return $finishStage($stage, $groupsResult);
+        return abort(400, 'Этап уже закончился, обновите страницу');
     }
 
     public function finishGroup($id, SortGroupResultAction $sortAction, CreateFleetsAction $createFleetsAction)
     {
         $stage = $this->stageRepository->getById($id);
         $status = $stage->status;
+
+        if($status !== 'group') {
+            abort(400, 'Групповой этап уже закончился, обновите страницу');
+        }
+
         $groups = $this->raceRepository->getStageStatusGroup($id)[$status];
 
         $drops = $this->stageRepository->getStageDrops($id, $status);

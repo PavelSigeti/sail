@@ -1,12 +1,13 @@
 <template>
-    <button @click="startStage" v-if="status === 'active'">Начать этап</button>
-    <button @click="finishGroupStage" v-if="status === 'group'">Завершить групповой этап</button>
-    <button @click="finishStage" v-if="status === 'default' || status === 'fleet'">Завершить регату</button>
+    <button class="btn btn-default btn-settings mb30" @click="startStage" v-if="status === 'active'">Начать этап</button>
+    <button class="btn btn-default btn-settings mb30" @click="finishGroupStage" v-if="status === 'group'">Завершить групповой этап</button>
+    <button class="btn btn-default btn-settings mb30" @click="finishStage" v-if="status === 'default' || status === 'fleet'">Завершить регату</button>
 </template>
 
 <script>
 import { ref } from 'vue';
 import axios from "axios";
+import {useStore} from 'vuex';
 
 export default {
     name: "TheStageStatus",
@@ -15,6 +16,7 @@ export default {
     setup(props, { emit }) {
         const status = ref(props.status);
         const id = props.id;
+        const store = useStore();
 
         const startStage = async () => {
             try {
@@ -23,6 +25,10 @@ export default {
                 emit('update', status.value);
             } catch (e) {
                 console.log(e.message);
+                store.dispatch('notification/displayMessage', {
+                    value: e.response.data.message,
+                    type: 'error',
+                });
             }
         };
 
@@ -33,6 +39,10 @@ export default {
                 emit('update', status.value);
             } catch (e) {
                 console.log(e.message);
+                store.dispatch('notification/displayMessage', {
+                    value: e.response.data.message,
+                    type: 'error',
+                });
             }
         };
 
@@ -43,6 +53,10 @@ export default {
                 emit('update', status.value);
             } catch (e) {
                 console.log(e.message);
+                store.dispatch('notification/displayMessage', {
+                    value: e.response.data.message,
+                    type: 'error',
+                });
             }
         };
 

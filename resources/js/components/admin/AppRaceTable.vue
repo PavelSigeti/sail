@@ -1,7 +1,7 @@
 <template>
     <div class="race-table">
         <h2>{{raceTitle[$props.status]}} #{{$props.groupId}}</h2>
-        <button @click="addRace">Добавить гонку</button>
+        <button class="btn btn-default btn-settings mb15" @click="addRace">Добавить гонку</button>
         <div class="race-table__header">
             <div class="race-table__row">
                 <div class="race-table__item race-table__name">Яхтсмен</div>

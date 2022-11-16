@@ -17,8 +17,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('login', [\App\Http\Controllers\AuthController::class, 'login']);
 
-Route::group(['middleware' => 'auth:sanctum'], function () {
-    Route::get('/settings', [\App\Http\Controllers\User\DashboardController::class, 'settings']);
+Route::group([/*'middleware' => 'auth:sanctum'*/], function () {
+    Route::get('/settings', [\App\Http\Controllers\User\DashboardController::class, 'invites']);
     Route::post('/team/store', [\App\Http\Controllers\User\TeamController::class, 'store']);
     Route::get('/team/edit', [\App\Http\Controllers\User\TeamController::class, 'edit']);
     Route::delete('/team/delete', [\App\Http\Controllers\User\TeamController::class, 'destroy']);
@@ -28,9 +28,11 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('/team-invite', [\App\Http\Controllers\User\TeamInviteController::class, 'store']);
     Route::delete('/team-invite/{id}/delete', [\App\Http\Controllers\User\TeamInviteController::class, 'destroy']);
     Route::post('/team-invite/{id}/accept', [\App\Http\Controllers\User\TeamInviteController::class, 'accept']);
+
+    Route::get('/user-settings',[\App\Http\Controllers\User\UserController::class, 'settings']);
 });
 
-Route::group([/*'middleware' => ['auth:sanctum',  'admin' ]*/], function () {
+Route::group(['middleware' => ['auth:sanctum',  'admin' ]], function () {
     Route::get('/admin', \App\Http\Controllers\Admin\DashboardController::class);
 
     Route::get('/admin/tournament', [\App\Http\Controllers\Admin\TournamentController::class, 'index']);

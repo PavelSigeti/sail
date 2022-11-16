@@ -11,7 +11,7 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Имя</th>
+                            <th>Яхтсмен</th>
                             <th v-for="i in Object.keys(group[0]).length - 1">
                                 #{{i}}
                             </th>
@@ -21,7 +21,11 @@
                     <tbody>
                         <tr v-for="(user, idx) in group">
                             <td>{{idx+1}}</td>
-                            <td>{{user[0].name}} {{user[0].surname}} {{user[0].nickname}}</td>
+                            <td>
+                                <div class="result-table__name">
+                                    {{user[0].name}} {{user[0].surname}} <span class="result-table__nick">{{user[0].nickname}}</span>
+                                </div>
+                            </td>
                             <td v-for="race in user">{{(race.drop) ?  (race.place === group.length + 1 )? `(dnf, ${race.place})` : `(${race.place})` : race.place ?? user.sum}}</td>
                         </tr>
                     </tbody>

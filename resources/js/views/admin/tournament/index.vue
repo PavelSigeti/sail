@@ -1,19 +1,11 @@
 <template>
-    <header class="dashboard-header">
-        <h1>Серии</h1>
-        <div class="header-content">
-            <div class="btn btn-border support-btn">Обратная связь</div>
-            <div class="header-notification">
-                <span class="header-notification__counter">1</span>
-                <i class="ri-notification-2-fill"></i>
-            </div>
-        </div>
-    </header>
+    <AppHeader>Серии</AppHeader>
     <main>
         <div class="container-fluid g-0">
             <div class="row">
                 <div class="col-12">
                     <div class="dashboard-item">
+                        <AppLoader v-if="loading" />
                         <h3>Добавить серию</h3>
                         <form @submit.prevent="submit">
                             <div class="form-control">
@@ -26,33 +18,51 @@
                             </div>
                             <div class="form-control">
                                 <label for="description">Описание</label>
-                                <textarea id="description" cols="30" rows="10" v-model="description"></textarea>
+                                <AppEditor v-model:modelValue="description" id="description" ref="editor" />
                             </div>
                             <button class="btn btn-default btn-settings">Создать</button>
                         </form>
                     </div>
                 </div>
+                <div class="col-12">
+                    <h2 class="mb30">Список серий</h2>
+                </div>
+                <div
+                    class="col-lg-3 col-md-6"
+                    v-for="tournament in tournaments"
+                    :key="tournament.id"
+                >
+                    <router-link
+                        :to="{name: 'tournament.edit', params: {id: tournament.id}}"
+                        class="stage-item"
+                    >
+                        <div class="stage-title">
+                            {{tournament.title}}
+                        </div>
+                        <div class="stage-yacht">
+                            {{tournament.yacht}}
+                        </div>
+                        <div class="btn btn-default btn-full-width">Подробнее</div>
+                    </router-link>
+                </div>
             </div>
         </div>
     </main>
-
-    <h2>Список серий</h2>
-    <div class="block-container">
-        <router-link v-for="tournament in tournaments" :key="tournament.id" :to="{name: 'tournament.edit', params: {id: tournament.id}}">
-            <div class="tournament-item">
-                {{tournament.title}} - {{tournament.yacht}}
-            </div>
-        </router-link>
-    </div>
 </template>
 
 <script>
 import {onMounted, ref} from 'vue';
 import axios from "axios";
 import { useStore } from 'vuex';
+import AppEditor from "@/components/admin/AppEditor.vue";
+import AppLoader from "@/components/ui/AppLoader.vue";
+import AppHeader from "@/components/ui/AppHeader.vue";
 
 export default {
     name: "tournament.index",
+    components: {
+        AppEditor, AppLoader, AppHeader,
+    },
     setup() {
         const title = ref('');
         const yacht = ref('');
@@ -61,8 +71,8 @@ export default {
         const tournaments = ref();
 
         const store = useStore();
-
         const loading = ref(false);
+        const editor = ref(null);
 
         onMounted( async() => {
             try {
@@ -93,19 +103,21 @@ export default {
                 });
                 title.value = '';
                 yacht.value = '';
-                description.value = '';
+                editor.value.clear();
+                loading.value = false;
             } catch (e) {
                 store.dispatch('notification/displayMessage', {
                     value: 'Ошибка создания серии',
                     type: 'error',
                 });
+                loading.value = false;
             }
-            loading.value = false;
         };
 
         return {
             submit, title, yacht,
             description, loading, tournaments,
+            editor,
         }
     }
 }

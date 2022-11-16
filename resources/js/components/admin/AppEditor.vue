@@ -97,7 +97,6 @@
 </template>
 
 <script>
-import {useStore} from "vuex";
 import {ref} from 'vue';
 import Image from '@tiptap/extension-image';
 import Link from '@tiptap/extension-link';
@@ -144,21 +143,22 @@ export default {
 
         const addImage = () => {
             const url = window.prompt('URL')
-
             if (url) {
                 editor.value.chain().focus().setImage({ src: url }).run()
             }
         };
 
+        const clear = () => {
+            editor.value.commands.clearContent();
+        };
+
         const setLink = () => {
             const previousUrl = editor.value.getAttributes('link').href
             const url = window.prompt('URL', previousUrl)
-
             // cancelled
             if (url === null) {
                 return;
             }
-
             // empty
             if (url === '') {
                 editor.value
@@ -170,7 +170,6 @@ export default {
 
                 return
             }
-
             // update link
             editor.value
                 .chain()
@@ -182,7 +181,7 @@ export default {
 
         return {
             editor, addImage, setLink,
-            table,
+            table, clear,
         }
     }
 }

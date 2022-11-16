@@ -52,4 +52,14 @@ class UserRepository extends CoreRepository
 
         return $result;
     }
+
+    public function getSettings($id)
+    {
+        $result = $this->startConditions()
+            ->select(['email', 'university_id', 'universities.name as university_name'])
+            ->join('universities', 'users.university_id', '=', 'universities.id')
+            ->find($id);
+
+        return $result;
+    }
 }

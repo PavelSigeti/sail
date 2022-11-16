@@ -1,6 +1,6 @@
 <template>
     <div class='race-table__item race-table__result' v-for="(_, key) in result" :key="key" >
-        id:{{key}}<input type="text" v-model="result[key]" :placeholder="`(dnf, ${userAmount})`">
+        <input type="text" v-model="result[key]" :placeholder="`(dnf, ${userAmount})`">
     </div>
     <div class="race-table__item race-table__result">
         <button @click="submit">Сохранить</button>

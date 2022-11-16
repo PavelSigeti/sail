@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Repositories\UserRepository;
 use App\Http\Requests\RemoveTeammateRequest;
 use App\Http\Requests\UserSearchRequest;
 use App\Models\Team;
@@ -11,6 +12,13 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+    protected $userRepository;
+
+    public function __construct()
+    {
+        $this->userRepository = app(UserRepository::class);
+    }
+
     public function search(UserSearchRequest $request)
     {
         $select = [
@@ -46,6 +54,13 @@ class UserController extends Controller
         } else {
             return abort(400, 'Ошибка! Перезагрузите страницу');
         }
+    }
+
+    public function settings()
+    {
+        $user = Auth::user();
+
+        return $this->userRepository->getSettings(1);
     }
 
 }

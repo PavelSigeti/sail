@@ -7,7 +7,7 @@
         <li class="menu-item"><router-link to="/dashboard"><i class="ri-file-line"></i><span>Регламент</span></router-link></li>
         <li class="menu-item"><router-link to="/dashboard"><i class="ri-information-line"></i><span>О проекте</span></router-link></li>
     </ul>
-    <TheAdminNavbar />
+    <TheAdminNavbar v-if="admin" />
 
 </template>
 

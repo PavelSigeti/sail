@@ -73,6 +73,7 @@ header {
 }
 .btn-settings {
     padding: 12px 24px;
+    width: fit-content;
 }
 .login-btn {
     height: 50px;
@@ -206,19 +207,19 @@ h2 {
     width: auto;
 }
 .menu-item {
-    flex-direction: row;
-    height: 50px;
-    transition: .3s;
-    display: flex;
-    align-items: center;
-    padding: 0 10px;
-    border-radius: 10px;
-    cursor: pointer;
     margin-right: 10px;
     a {
+        padding: 0 10px;
         color: #242424;
         display: flex;
         align-items: center;
+        border-radius: 10px;
+        flex-direction: row;
+        height: 50px;
+        transition: .3s;
+        &:hover {
+            background-color: $grey;
+        }
     }
     span {
         font-size: 1.2em;
@@ -227,9 +228,6 @@ h2 {
         font-size: 2em;
         color: #333;
         margin-right: 15px;
-    }
-    &:hover {
-        background-color: $grey;
     }
 }
 .user-icon {
@@ -523,6 +521,122 @@ h1 {
 .menu-admin {
     margin-top: 30px;
 }
+.stage-item {
+    display: flex;
+    background-color: #FDFDFD;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    box-shadow: 0px 0px 40px 5px rgba(0, 0, 0, .1);
+    flex-direction: column;
+    color: #242424;
+    .btn-full-width {
+        height: 40px;
+        font-size: .95em;
+    }
+}
+.stage-title {
+    font-size: 1.25em;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+.stage-yacht, .stage-time {
+    font-size: .95em;
+    color: #555;
+    margin-bottom: 10px;
+}
+.stage-time {
+    color: #242424;
+}
+.result-table {
+    border-collapse: collapse;
+    margin-bottom: 30px;
+    th, tr {
+        cursor: default;
+    }
+    thead th {
+        font-weight: bold;
+        text-align: center;
+        border: none;
+        padding: 10px 15px;
+        background: #d8d8d8;
+    }
+    thead tr th:first-child {
+        border-radius: 10px 0 0 10px;
+    }
+    thead tr th:last-child {
+        border-radius: 0 10px 10px 0;
+    }
+    tbody td {
+        text-align: center;
+        border: none;
+        padding: 10px 15px;
+        vertical-align: middle;
+    }
+    tbody tr {
+        border-radius: 10px;
+    }
+    tbody tr:nth-child(even){
+        td {
+            background: #eee;
+        }
+    }
+    tbody tr td:first-child {
+        border-radius: 10px 0 0 10px;
+    }
+    tbody tr td:last-child {
+        border-radius: 0 10px 10px 0;
+    }
+    tbody tr:last-child td:first-child {
+        border-radius: 10px 0 0 10px;
+    }
+    tbody td, thead th {
+        border-right: 1px solid #ccc;
+    }
+    tbody td:last-child, thead th:last-child {
+        border-right: none;
+    }
+    tbody td:first-child, thead th:first-child {
+        border-right: none;
+    }
+    tbody tr:hover td{
+        background-color: #e4edff;
+    }
+}
+.result-table__name {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.result-table__nick {
+    color: #555;
+    font-size: .9em;
+}
+.page-link {
+    display: flex;
+    background-color: #FDFDFD;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    box-shadow: 0px 0px 40px 5px rgba(0, 0, 0, .1);
+    flex-direction: column;
+    color: #242424;
+    span {
+        font-size: 1.2em;
+        font-weight: 500;
+        margin-bottom: 15px;
+    }
+}
+.user-account__data {
+    font-size: 1.1em;
+    margin-bottom: 30px;
+}
+
+
+
+
+
+
 
 
 
@@ -543,6 +657,9 @@ h1 {
 }
 .mb15 {
     margin-bottom: 15px;
+}
+.mb30 {
+    margin-bottom: 30px;
 }
 .notification {
     position: fixed;

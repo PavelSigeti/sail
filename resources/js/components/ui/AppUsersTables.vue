@@ -1,10 +1,9 @@
 <template>
-    <table v-if="users">
+    <table v-if="users" class="result-table">
         <thead>
             <tr>
-                <td>#</td>
-                <td>Яхтсмен</td>
-                <td></td>
+                <th>#</th>
+                <th>Яхтсмен</th>
             </tr>
         </thead>
         <tbody>

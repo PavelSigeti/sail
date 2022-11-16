@@ -25,12 +25,13 @@ import TheNavbar from "../components/TheNavbar.vue";
 import TheNotification from "@/components/ui/TheNotification.vue";
 import { useStore } from 'vuex';
 import { computed } from 'vue';
+import AppUser from '../components/ui/AppUser.vue';
 
 
 export default {
     name: "AdminLayout",
     components: {
-        TheNavbar, TheNotification
+        TheNavbar, TheNotification, AppUser,
     },
     setup() {
         const store = useStore();
@@ -46,5 +47,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-    @import '../static/scss/admin';
+     :deep(){
+            @import '../static/scss/admin.scss';
+    }
 </style>

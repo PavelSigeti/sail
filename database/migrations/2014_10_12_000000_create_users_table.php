@@ -24,7 +24,7 @@ return new class extends Migration
             $table->integer('university_id')->nullable();
             $table->string('nickname', 32);
             $table->string('role')->default('player');
-            $table->rememberToken();
+//            $table->rememberToken();
             $table->timestamps();
         });
     }
