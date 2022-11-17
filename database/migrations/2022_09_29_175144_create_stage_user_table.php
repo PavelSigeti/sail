@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->integer('team_id')->unsigned()->nullable();
             $table->string('nickname');
-            $table->timestamps();
+//            $table->timestamps();
         });
     }
 

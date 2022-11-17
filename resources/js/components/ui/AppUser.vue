@@ -15,7 +15,7 @@
           </div>
       </div>
       <div class="user-settings">
-          <router-link to="/settings"><i class="ri-settings-2-fill"></i></router-link>
+          <router-link to="/dashboard/settings"><i class="ri-settings-2-fill"></i></router-link>
       </div>
   </div>
 </template>

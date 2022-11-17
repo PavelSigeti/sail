@@ -211,15 +211,14 @@ export default {
                   type: 'primary',
               });
               await getData();
-              loading.value = false;
             }  catch (e) {
               console.log(e.message);
               store.dispatch('notification/displayMessage', {
                   value: e.response.data.message,
                   type: 'error',
               });
-              loading.value = false;
             }
+            loading.value = false;
         };
 
         return {

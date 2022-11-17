@@ -30,6 +30,13 @@ Route::group([/*'middleware' => 'auth:sanctum'*/], function () {
     Route::post('/team-invite/{id}/accept', [\App\Http\Controllers\User\TeamInviteController::class, 'accept']);
 
     Route::get('/user-settings',[\App\Http\Controllers\User\UserController::class, 'settings']);
+    Route::patch('/user/update',[\App\Http\Controllers\User\UserController::class, 'update']);
+
+    Route::get('/stage/actual', [\App\Http\Controllers\User\StageController::class, 'actual']);
+    Route::get('/stage/registered-stage', [\App\Http\Controllers\User\StageController::class, 'registeredStage']);
+    Route::get('/stage/ended', [\App\Http\Controllers\User\StageController::class, 'ended']);
+    Route::post('/stage/{id}/accept', [\App\Http\Controllers\User\StageController::class, 'accept']);
+    Route::post('/stage/{id}/cancel', [\App\Http\Controllers\User\StageController::class, 'cancel']);
 });
 
 Route::group(['middleware' => ['auth:sanctum',  'admin' ]], function () {

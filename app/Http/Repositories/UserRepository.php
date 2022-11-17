@@ -56,8 +56,8 @@ class UserRepository extends CoreRepository
     public function getSettings($id)
     {
         $result = $this->startConditions()
-            ->select(['email', 'university_id', 'universities.name as university_name'])
-            ->join('universities', 'users.university_id', '=', 'universities.id')
+            ->select(['email', 'university_id', 'universities.name as university'])
+            ->leftJoin('universities', 'users.university_id', '=', 'universities.id')
             ->find($id);
 
         return $result;

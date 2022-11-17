@@ -64,4 +64,68 @@ class StageRepository extends CoreRepository
         return $result;
     }
 
+    public function getActual($id)
+    {
+        $columns = [
+            'stages.id', 'register_start', 'register_end',
+            'race_start', 'stages.title', 'tournaments.title as tournament',
+            'excerpt', 'status',
+        ];
+
+        $result = $this->startConditions()
+            ->select($columns)
+            ->join('tournaments', 'stages.tournament_id', '=', 'tournaments.id')
+            ->withExists(['users' => function($query) use ($id){
+                $query->where('user_id', $id);
+            }])
+            ->where('status', '!=', 'finished')
+            ->orderBy('race_start')
+            ->get();
+
+        return $result;
+    }
+
+    public function getEnded($id)
+    {
+        $columns = [
+            'stages.id', 'register_start', 'register_end',
+            'race_start', 'stages.title', 'tournaments.title as tournament',
+            'excerpt', 'status',
+        ];
+
+        $result = $this->startConditions()
+            ->select($columns)
+            ->join('tournaments', 'stages.tournament_id', '=', 'tournaments.id')
+            ->withExists(['users' => function($query) use ($id){
+                $query->where('user_id', $id);
+            }])
+            ->where('status', 'finished')
+            ->orderBy('race_start')
+            ->get();
+
+        return $result;
+    }
+
+    public function getUserStages($id)
+    {
+        $columns = [
+            'stages.id', 'register_start', 'register_end',
+            'race_start', 'stages.title', 'tournaments.title as tournament',
+            'excerpt', 'status', 'stage_user.stage_id',
+        ];
+
+        $result = $this->startConditions()
+            ->select($columns)
+            ->join('tournaments', 'stages.tournament_id', '=', 'tournaments.id')
+            ->join('stage_user', 'stages.id', 'stage_user.stage_id')
+            ->where('user_id', $id)
+            ->orderBy('race_start')
+            ->get()
+            ->map(function ($item) {
+                $item['users_exists'] = true;
+                return $item;
+            });
+
+        return $result;
+    }
 }

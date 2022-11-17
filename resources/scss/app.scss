@@ -75,6 +75,10 @@ header {
     padding: 12px 24px;
     width: fit-content;
 }
+.btn-settings-280 {
+    height: 50px;
+    width: 280px;
+}
 .login-btn {
     height: 50px;
     width: 160px;
@@ -521,33 +525,6 @@ h1 {
 .menu-admin {
     margin-top: 30px;
 }
-.stage-item {
-    display: flex;
-    background-color: #FDFDFD;
-    padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 30px;
-    box-shadow: 0px 0px 40px 5px rgba(0, 0, 0, .1);
-    flex-direction: column;
-    color: #242424;
-    .btn-full-width {
-        height: 40px;
-        font-size: .95em;
-    }
-}
-.stage-title {
-    font-size: 1.25em;
-    font-weight: 500;
-    margin-bottom: 10px;
-}
-.stage-yacht, .stage-time {
-    font-size: .95em;
-    color: #555;
-    margin-bottom: 10px;
-}
-.stage-time {
-    color: #242424;
-}
 .result-table {
     border-collapse: collapse;
     margin-bottom: 30px;
@@ -572,6 +549,9 @@ h1 {
         border: none;
         padding: 10px 15px;
         vertical-align: middle;
+        &:nth-child(2) {
+            text-align: left;
+        }
     }
     tbody tr {
         border-radius: 10px;
@@ -631,11 +611,83 @@ h1 {
     font-size: 1.1em;
     margin-bottom: 30px;
 }
-
-
-
-
-
+.tabs {
+    display: flex;
+    margin-bottom: 30px;
+}
+.tab-item {
+    display: flex;
+    box-shadow:inset 0px 0px 0px 2px $dark;
+    font-weight: 500;
+    font-size: .95em;
+    padding: 15px 30px;
+    margin-right: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: .3s;
+    &:hover {
+        background-color: $dark;
+        color: #fff;
+    }
+}
+.tab-item__active {
+    background-color: $dark;
+    color: #fff;
+    transition: .3s;
+}
+.user-stage {
+    display: flex;
+    background-color: #FDFDFD;
+    padding: 30px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    box-shadow: 0px 0px 40px 5px rgba(0, 0, 0, .1);
+    flex-direction: column;
+    position: relative;
+}
+.user-stage__header {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    margin-bottom: 30px;
+}
+.user-stage__title {
+    font-weight: 500;
+    font-size: 1.5em;
+    color: #242424;
+}
+.user-stage__tournament {
+    color: #555;
+    margin-right: 15px;
+}
+.user-stage__participant {
+    border: 2px solid $dark;
+    align-self: center;
+    padding: 5px 8px;
+    font-size: .95em;
+    border-radius: 5px;
+    font-weight: 500;
+}
+.user-stage__excerpt {
+    font-size: 1.1em;
+    line-height: 110%;
+    margin-bottom: 15px;
+}
+.user-stage__date {
+    line-height: 130%;
+    margin-bottom: 30px;
+}
+.user-stage__info {
+    width: 280px;
+    height: 50px;
+    border-radius: 10px;
+    background-color: #EBEBEB;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
 
 
 
@@ -749,4 +801,9 @@ body .vue3-progress-bar-container .vue3-progress-bar {
 }
 .b500 {
     font-weight: 500;
+}
+.content {
+    p {
+        text-align: justify;
+    }
 }

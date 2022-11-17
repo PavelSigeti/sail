@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Repositories\UserRepository;
 use App\Http\Requests\RemoveTeammateRequest;
 use App\Http\Requests\UserSearchRequest;
+use App\Http\Requests\UserUpdateRequest;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -60,7 +61,21 @@ class UserController extends Controller
     {
         $user = Auth::user();
 
-        return $this->userRepository->getSettings(1);
+        return $this->userRepository->getSettings($user->id);
     }
 
+    public function update(UserUpdateRequest $request)
+    {
+        $user = Auth::user();
+        if($user->university_id !== null) {
+            $user->update([
+                'nickname' => $request->nickname,
+            ]);
+        } else {
+            $user->update([
+                'nickname' => $request->nickname,
+                'university_id' => $request->university_id,
+            ]);
+        }
+    }
 }

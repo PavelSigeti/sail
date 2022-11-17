@@ -106,9 +106,18 @@ export default [
         }
     },
     {
-        path: '/settings',
+        path: '/dashboard/settings',
         name: 'user.settings',
         component: () => import('../views/user/Settings.vue'),
+        meta: {
+            layout: 'Auth',
+            auth: true,
+        }
+    },
+    {
+        path: '/dashboard/stages',
+        name: 'user.stages',
+        component: () => import('../views/user/stage/StageUser.vue'),
         meta: {
             layout: 'Auth',
             auth: true,

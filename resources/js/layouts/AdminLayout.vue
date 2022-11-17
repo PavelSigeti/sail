@@ -39,8 +39,12 @@ export default {
         const message = computed(() => store.getters['notification/message']);
         const type = computed(() => store.getters['notification/type']);
 
+        const logout = () => {
+            store.dispatch('auth/logout');
+        };
+
         return {
-            message, type,
+            message, type, logout,
         }
     }
 }
