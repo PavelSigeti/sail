@@ -15,7 +15,14 @@
                 <div class="col-lg-4">
                     <TheTeamSettings />
                 </div>
-                <div class="col-lg-8"></div>
+                <div class="col-lg-8">
+                    <div class="dashboard-item">
+                        <h3>Актуальные гонки</h3>
+                        <div class="dash-stage__container">
+                            <AppDashActualStages></AppDashActualStages>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
@@ -23,11 +30,12 @@
 
 <script>
 import TheTeamSettings from "../components/user/team/TheTeamSettings.vue";
+import AppDashActualStages from "../components/user/dash/AppDashActualStages.vue";
 
 export default {
     name: "Dashboard",
     components: {
-        TheTeamSettings
+        TheTeamSettings, AppDashActualStages,
     },
     setup() {
         return {

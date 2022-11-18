@@ -84,6 +84,27 @@ class StageRepository extends CoreRepository
 
         return $result;
     }
+    public function getActualDashboard($id)
+    {
+        $columns = [
+            'stages.id', 'register_start', 'register_end',
+            'race_start', 'stages.title', 'tournaments.title as tournament',
+            'excerpt', 'status',
+        ];
+
+        $result = $this->startConditions()
+            ->select($columns)
+            ->join('tournaments', 'stages.tournament_id', '=', 'tournaments.id')
+            ->withExists(['users' => function($query) use ($id){
+                $query->where('user_id', $id);
+            }])
+            ->where('status', '!=', 'finished')
+            ->orderBy('race_start')
+            ->limit(2)
+            ->get();
+
+        return $result;
+    }
 
     public function getEnded($id)
     {

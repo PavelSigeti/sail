@@ -123,6 +123,15 @@ export default [
             auth: true,
         }
     },
+    {
+        path: '/dashboard/stage/:id',
+        name: 'user.stage.page',
+        component: () => import('../views/user/stage/StagePage.vue'),
+        meta: {
+            layout: 'Auth',
+            auth: true,
+        }
+    },
 
     {
         path: '/:pathMatch(.*)*',

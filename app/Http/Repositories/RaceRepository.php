@@ -45,7 +45,7 @@ class RaceRepository extends CoreRepository
     public function getRaceUsers($id)
     {
         $columns = [
-            'user_id', 'name',
+            'user_id', 'nickname',
         ];
 
         $result = $this->startConditions()

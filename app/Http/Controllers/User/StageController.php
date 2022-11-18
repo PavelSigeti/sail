@@ -4,7 +4,6 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Repositories\StageRepository;
-use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,8 +19,13 @@ class StageController extends Controller
     public function actual()
     {
         $user = Auth::user();
-
         return $this->stageRepository->getActual($user->id);
+    }
+
+    public function actualDashboard()
+    {
+        $user = Auth::user();
+        return $this->stageRepository->getActualDashboard(25);
     }
 
     public function registeredStage()
@@ -76,5 +80,10 @@ class StageController extends Controller
         } else {
             return abort('400', 'Ошибка, гонка уже началась');
         }
+    }
+
+    public function show($id)
+    {
+        return $this->stageRepository->getById($id);
     }
 }

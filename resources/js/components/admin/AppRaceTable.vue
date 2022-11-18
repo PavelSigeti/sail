@@ -12,7 +12,7 @@
         <div class="race-table__body">
             <div class="race-table__column">
                 <div class="race-table__item race-table__name" v-for="user in usersData" :key="user.user_id">
-                    {{user.name}}
+                    {{user.nickname}}
                 </div>
             </div>
             <div class="race-table__column" v-for="(race, idx) in raceData" :key="race.race_id">
@@ -74,6 +74,8 @@ export default {
                 lastRaceId.value = raceData.value[0].race_id;
                 const users = await axios.get(`/api/admin/race/${lastRaceId.value}/users`);
                 usersData.value = users.data;
+
+                console.log('usersData', usersData.value);
 
                 await getTotal();
             } catch (e) {
